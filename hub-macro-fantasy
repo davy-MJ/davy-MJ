@@ -1,0 +1,82 @@
+!power {{	
+--name|zone glacial
+--!img|[img](https://static.wikia.nocookie.net/omniverse-fanon/images/d/dd/Tumblr_static_tumblr_static_9tk03t0wawco40kc8w4kooogs_640.gif)
+--!information|Le personnage gèle autour de lui une surface de 5 mètres de rayon . Toutes les créatures dans la zone, à moins d’être résistantes au froid, doivent réussir un test de CON de difficulté 10
+--api_setattr|_charid @{selected|character_id} _aura|10 _silent
+}}
+
+!power {{	
+--name|zone glacial
+--!img|[img](https://static.wikia.nocookie.net/omniverse-fanon/images/d/dd/Tumblr_static_tumblr_static_9tk03t0wawco40kc8w4kooogs_640.gif)
+--!information|Le personnage gèle autour de lui une surface de 5 mètres de rayon . Toutes les créatures dans la zone, à moins d’être résistantes au froid, doivent réussir un test de CON de difficulté 10
+--api_setattr|_charid @{target|character_id} _aura|10 _silent
+}}
+
+!cof-jet ?{Faire un jet de |Charisme, CHA|Constitution, CON|Dextérité, DEX|Force, FOR|Intelligence, INT|Sagesse, SAG} --bonus ?{avec un bonus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+------
+!power {{
+--whisper|GM
+--name | Niveau de rosah
+--~C[MJ](https://s3.amazonaws.com/files.d20.io/images/220515753/lh6pArqGNYJvLyIO9maLAA/max.png)~C
+--hroll|[[ [$niv] @{selected|reserve-rosha}+1d0]]
+--Reserve de rosha | [^niv]
+}}
+-------------------------
+!power {{
+--whisper|GM
+--name | Consomation de rosha
+--~C[MJ](https://s3.amazonaws.com/files.d20.io/images/220515753/lh6pArqGNYJvLyIO9maLAA/max.png)~C
+--hroll|[[ [$niv-down] @{selected|reserve-rosha}-1+1d0]]
+--Reserve de rosha | [^niv-down]
+--api_setattr|_charid @{selected|character_id} _reserve-rosha|[^niv-down]  _mute
+}}
+
+----------------------
+
+!power {{
+--whisper|GM
+--name | Reserve de rosha
+--~C[MJ](https://s3.amazonaws.com/files.d20.io/images/220515753/lh6pArqGNYJvLyIO9maLAA/max.png)~C
+--hroll|[[ [$niv] @{selected|reserve-rosha}+1d0]]
+--Reserve de rosha | [^niv]
+--api_setattr|_charid @{selected|character_id} _reserve-rosha|[^niv]  _mute
+}}
+-----------------------------
+!power {{ 
+--name|Rosha
+--[img](https://i.pinimg.com/564x/e5/8c/5b/e58c5bf4128d86b25801987f8e061ba7.jpg)
+--hroll|[[ [$var] 1d20+@{selected|FOR} [$niv5] @{selected|reserve-rosha}+5+1d0 [$niv4] @{selected|reserve-rosha}+4+1d0 [$niv3] @{selected|reserve-rosha}+3+1d0 [$niv2] @{selected|reserve-rosha}+2+1d0 ]]
+--Resultat|[^var] [$niv5] [$niv4]
+--?! $var.base >= 15 ?! Nombre de sac de rosha:| 5
+--?! $var.base >= 10 AND $var.base < 14 ?! Nombre de sac de rosha:| 4
+--?! $var.base < 9 AND $var.base > 5 ?! Nombre de sac de rosha :| 3
+--?! $var.base <= 5 ?! Nombre de sac de rosha :| 2
+}} 
+---------------------------
+!power {{ 
+--name|Recolte de Rosha
+--[img](https://i.pinimg.com/564x/e5/8c/5b/e58c5bf4128d86b25801987f8e061ba7.jpg)
+--hroll|[[ [$var] 1d20+@{selected|FOR} ]] [[ [$niv5] @{selected|reserve-rosha}+5+1d0 ]] [[ [$niv4] @{selected|reserve-rosha}+5+1d0 ]] [[ [$niv3] @{selected|reserve-rosha}+5+1d0 ]] [[ [$niv2] @{selected|reserve-rosha}+5+1d0 ]]
+-- info | ~C Le nuage de rosha est en vu, vous déployez les sacs à rosha pour commencer votre récolte~C
+--Resultat du dé de recolte |[^var] 
+--?? $var.base >= 15 ?? Nombre de sac de rosha:| 5
+--?? $var.base >= 15 ?? api_setattr|_charid @{selected|character_id} _reserve-rosha|[^niv5] _mute
+--?? $var.base >= 15 ?? Votre réserve de rosha est maintenant de |[^niv5]
+--?? $var.base >= 10 AND $var.base <= 14 ?? Nombre de sac de rosha:| 4
+--?? $var.base >= 10 AND $var.base <= 14 ?? api_setattr|_charid @{selected|character_id} _reserve-rosha|[^niv4] _mute
+--?? $var.base >= 10 AND $var.base <= 14 ?? Votre réserve de rosha est maintenant de |[^niv4]
+--?? $var.base < 9 AND $var.base >= 6 ?? Nombre de sac de rosha :| 3
+--?? $var.base < 9 AND $var.base >= 6 ?? api_setattr|_charid @{selected|character_id} _reserve-rosha|[^niv3] _mute
+--?? $var.base < 9 AND $var.base >= 6 ?? Votre réserve de rosha est maintenant de |[^niv3]
+--?? $var.base <= 5 ?? Nombre de sac de rosha :| 2
+--?? $var.base <= 5 ?? api_setattr|_charid @{selected|character_id} _reserve-rosha|[^niv2] _mute
+--?? $var.base <= 5 ?? Votre réserve de rosha est maintenant de | [^niv2] 
+}} 
+
+--------------------------
+!power {{ 
+--name|tempete des sables
+--[img](https://i.pinimg.com/564x/e5/8c/5b/e58c5bf4128d86b25801987f8e061ba7.jpg)
+--hroll|[[ [$degat] 5D20] ]
+--les dégats | [^degat]
+}}
