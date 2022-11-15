@@ -1,0 +1,352 @@
+!power {{
+--name|Bultin de note
+--inlinereplace|moy|[[@{selected|for}+1d20r<2+@{selected|dex}+1d20r<2+@{selected|int}+1d20r<2+@{selected|sag}+1d20r<2+@{selected|con}+1d20r<5+@{selected|cha}+1d20r<2)]]
+--!Fiche personnage |~R[Voir](https://www.silverspringchurchofchrist.org/wp-content/uploads/2019/09/bulletins_icon_2019.png)~R
+--nombre de points |~moy$/120	
+}}
+
+Sharpshooting Gear
+--if deAttaque @{target|force} --message la cible recul de 1D6 cas --endif
+
+!power {{
+--whisper|GM
+--[MJ](https://media.tenor.com/images/8dd4550ef1398457d4a608c4c7fc7f86/tenor.gif)
+--name|gestion des pouvoirs
+--!lancer1| ~C[BouclierPsi](!&#13;#bouclierPsi)[Invisible](!&#13;#invisible)~C
+}}
+
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--name|gestion des Points de célérité (chance)
+--PC | @{selected|pc} /  @{selected|pc_max}
+--!lancer1| ~C[Réussite héroique](!&#13;#reussite-heroique)~C
+--!lancer3|~C[poussee d'adrenaline](!&#13;#poussee-adrenaline)~C
+--!lancer4|~C[Juste une égratinure](!&#13;#juste-egratinure)~C
+--!lancer5|~C[Increvable](!&#13;#increvable)~C
+--!line|~~~ 
+--!lancer2| ~C[Ajouter un PC](!&#13;#ajoute-pc)~C
+}}
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--name|gestion des Points de célérité (chance)
+--PC | @{selected|pc} /  @{selected|pc_max}
+--!lancer1| ~C[Réussite héroique](!&#13;#reussite-heroique)~C
+--!lancer3|~C[poussee d'adrenaline](!&#13;#poussee-adrenaline)~C
+--!lancer4|~C[Juste une égratinure](!&#13;#juste-egratinure)~C
+--!lancer5|~C[Increvable](!&#13;#increvable)~C
+--!line|~~~ 
+--!lancer2| ~C[Ajouter un PC](!&#13;#ajoute-pc)~C
+}}
+
+!power {{
+--whisper|self
+--tokenid|@{selected|token_id}
+--emote|@{selected|character_name}
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--name|gestion des Points de célérité (chance)
+--PC | @{selected|pc} /  @{selected|pc_max}
+--!lancer1| ~C[Réussite héroique](!&#13;#reussite-heroique)~C
+--!lancer3|~C[poussee d'adrenaline](!&#13;#poussee-adrenaline)~C
+--!lancer4|~C[Juste une égratinure](!&#13;#juste-egratinure)~C
+--!lancer5|~C[Increvable](!&#13;#increvable)~C
+--!line|~~~ 
+--!lancer2| ~C[Ajouter un PC](!&#13;#ajoute-pc)~C
+}}
+
+Poussée d’adrénaline
+
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--inlinereplace|pc|@{selected|pc}
+--hroll|[[ [$niv] @{selected|niveau}-1+1d0]] [[ [$rep] @{selected|pc}-1d1]] 
+--name|Poussée d’adrénaline
+--!info | **1 PC** permet d’obtenir une **action supplémentaire** (attaque simple ou action de mouvement) et **+10 en initiative**. Au tour suivant, le personnage agit à son initiative habituel
+--?! "~pc$" -gt "0" !? !ok1 | ~C**Votre point de célérité a été dépensé**~C
+--?! "~pc$" -gt "0" !? api_cof-set-attribute|pc [^rep] _target @{selected|token_id}
+--?! "~pc$" -eq "0" !? !nk1|~C**vous n'avez plus de point de célérité**~C
+}}
+
+!power {{
+--whisper|GM
+--name|Information
+--!text|la musique @{Target|bar1} se lance
+--api_cof-jouer-son|@{Target|bar1}
+}}
+
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--inlinereplace|pc|@{selected|pc}
+--hroll|[[ [$niv] @{selected|niveau}-1+1d0]] [[ [$rep] @{selected|pc}-1d1]] 
+--name|Increvable
+--!info |Une fois par combat,  **1 PC** permet au joueur de se relever au prochain tour quand il tombe à zéro. il regagne **1 dé de vie * niveau de PV**, mais il est **gravement blessé (affaibli)** à son réveil
+--?! "~pc$" -gt "0" !? !ok1 | ~C**Votre point de célérité a été dépensé**~C
+--?! "~pc$" -gt "0" !? api_cof-set-attribute|pc [^rep] _target @{selected|token_id}
+--?! "~pc$" -gt "0" !? api_cof-set-state| mort false _target @{selected|token_id}
+--?! "~pc$" -gt "0" !? api_cof-soin| @{selected|niveau}d@{selected|pc} _target @{selected|token_id}
+--?! "~pc$" -gt "0" !? api_cof-set-state| affaibli true _target @{selected|token_id}
+--?! "~pc$" -eq "0" !? !nk1|~C**vous n'avez plus de point de célérité**~C
+}}
+
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--inlinereplace|pc|@{selected|pc}
+--hroll|[[ [$niv] @{selected|niveau}-1+1d0]] [[ [$rep] @{selected|pc}-1d1]] 
+--name|Juste une égratignure
+--!info | Une fois par combat, un joueur peut dépenser **1 PC** pour annuler une **blessure grave** ou un état **affaibli**. Le personnage subit tout de même les DM, mais la blessure n’était pas si grave, ou le coup a par miracle évité les organes vitaux.
+--?! "~pc$" -gt "0" !? !ok1 | ~C**Votre point de célérité a été dépensé**~C
+--?! "~pc$" -gt "0" !? api_cof-set-attribute|pc [^rep] _target @{selected|token_id}
+--?! "~pc$" -gt "0" !? api_cof-set-state| affaibli false _target @{selected|token_id}
+--?! "~pc$" -eq "0" !? !nk1|~C**vous n'avez plus de point de célérité**~C
+}}
+
+
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--inlinereplace|pc|@{selected|pc}
+--hroll|[[ [$niv] @{selected|niveau}-1+1d0]] [[ [$rep] @{selected|pc}-1d1]] 
+--name|Réussite héroïque
+--?! "~pc$" -gt "0" !? !ok1 | ~C**Votre point de célérité a été dépensé**~C
+--?! "~pc$" -gt "0" !? api_cof-set-attribute|pc [^rep] _target @{selected|token_id}
+--?! "~pc$" -gt "0" !? !bouton|~C[Infliger les dégats](!&#13;!cof-attack @{selected|token_id} @{target|token_id} Réussite héroïque &#45;&#45;dm 1d6+@{selected|DV} &#45;&#45;auto &#45;&#45;incrDmgCoef [^niv] &#45;&#45;sortilege &#45;&#45;targetFx explosion&#45;blood)~C
+--?! "~pc$" -eq "0" !? !nk1|~C**vous n'avez plus de point de célérité**~C
+}}
+
+
+!power {{--whisper|self 
+--name|bouclier psi 
+--!information|Lorsqu’il active ce pouvoir, le personnage protège un maximum d’une personne par rang plus lui-même de toute intrusion mentale (domination, lecture des pensées, etc.). Toutes les cibles doivent être dans un rayon de 10 mètres autour de lui.  --!Note MJ| ~C[test](https://s3.amazonaws.com/files.d20.io/images/217215799/Sm58rqQ04Zz9FTLzL-_NPg/med.png)~C 
+--api_cof-lancer-sort| @{selected|character_name} Lance un bouclier psy _target @{selected|token_id}
+}}
+!power {{
+--whisper|GM
+--inlinereplace|rep|?{BouclierPsi ? |oui|non}
+--name|gestion du bouclierPsi
+--?! "~rep$" -eq "oui" !? !tag1 | ~C**le bouclier psi est ajouté**~C
+--?! "~rep$" -eq "oui" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=bouclierPsi
+--?! "~rep$" -eq "oui" !? api_cof-set-attribute|bouclierPsi true _target @{target|token_id}
+--?! "~rep$" -eq "non" !? !tag1 | ~C**le bouclier psi est enlevé**~C
+--?! "~rep$" -eq "non" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=bouclierPsi|-bouclierPsi
+--?! "~rep$" -eq "non" !? api_cof-set-attribute|bouclierPsi false _target @{target|token_id}
+}}
+
+[test](https://s3.amazonaws.com/files.d20.io/images/217215799/Sm58rqQ04Zz9FTLzL-_NPg/med.png)
+
+!power {{
+--whisper|self
+--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+--inlinereplace|pc|@{selected|pc}
+--hroll|[[ [$rep] @{selected|pc}-1d1]] 
+--name|gestion des Points de célérité (chance)
+--?! "~pc$" -ne "0" !? api_cof-set-attribute|pc [^rep] _target @{target|token_id}
+--?! "~pc$" -ne "0" !? !ok1 | ~C**Votre point de célérité a été dépensé**~C
+--?! "~pc$" -eq "0" !? !nk1 | ~C**vous n'avez plus de point de célérité**~C
+}}
+
+
+
+	!power {{
+	--whisper|self
+	--[MJ](https://media3.giphy.com/media/67oWKfDkwuFpByHv3j/source.gif)
+	--inlinereplace|pc_max|@{selected|pc_max}
+	--inlinereplace|pc|@{selected|pc}
+	--hroll|[[ [$rep] @{selected|pc}+1d1]] 
+	--name|gestion des Points de célérité (chance)
+	--?! "~pc_max$" -ne "~pc$" !? api_cof-set-attribute|pc [^rep] _target @{selected|token_id}
+	--?! "~pc_max$" -ne "~pc$" !? !ok1 | ~C**Votre point de célérité a été ajouté**~C
+	--?! "~pc_max$" -eq "~pc$" !? !nk1 | ~C**vous êtes au niveau max de point de célérité**~C
+	}}
+
+
+!power {{
+--whisper|GM
+--inlinereplace|rep|?{BouclierPsi ? |oui|non}
+--name|gestion du bouclierPsi
+--?! "~rep$" -eq "oui" !? !tag1 | ~C**le bouclier psi est ajouté**~C
+--?! "~rep$" -eq "oui" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=bouclierPsi
+--?! "~rep$" -eq "oui" !? api_cof-set-attribute|bouclierPsi true _target @{target|token_id}
+--?! "~rep$" -eq "non" !? !tag1 | ~C**le bouclier psi est enlevé**~C
+--?! "~rep$" -eq "non" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=bouclierPsi|-bouclierPsi
+--?! "~rep$" -eq "non" !? api_cof-set-attribute|bouclierPsi false _target @{target|token_id}
+}}
+
+!power {{
+--whisper|GM
+--inlinereplace|rep|?{invisible ? |oui|non}
+--name|gestion de l'invisitibilité
+--?! "~rep$" -eq "oui" !? !tag1 | ~C**le joueur devient invisible**~C
+--?! "~rep$" -eq "oui" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=invisible
+--?! "~rep$" -eq "oui" !? api_cof-set-attribute|invisible true _target @{target|token_id}
+--?! "~rep$" -eq "non" !? !tag2 | ~C**le joueur n'est plus invisible**~C
+--?! "~rep$" -eq "non" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=invisible|-invisible
+--?! "~rep$" -eq "non" !? api_cof-set-attribute|invisible false _target @{target|token_id}
+}}
+
+!power {{
+--whisper|GM
+--inlinereplace|rep|?{invisible ? |oui|non}
+--name|gestion de l'invisitibilité
+--?! "~rep$" -eq "oui" !? !tag1 | ~C**le joueur devient invisible**~C
+--?! "~rep$" -eq "oui" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=invisible
+--?! "~rep$" -eq "oui" !? api_cof-set-attribute|invisible true _target @{target|token_id}
+--?! "~rep$" -eq "non" !? !tag2 | ~C**le joueur n'est plus invisible**~C
+--?! "~rep$" -eq "non" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=invisible|-invisible
+--?! "~rep$" -eq "non" !? api_cof-set-attribute|invisible false _target @{target|token_id}
+}}
+
+!power {{
+--whisper|GM
+--api_cof-set-attribute|bouclierPsi false _target @{target|token_id}
+}}
+
+!power {{--whisper|all --name|bouclier psi --!information|Lorsqu’il active ce pouvoir, le personnage protège un maximum d’une personne par rang plus lui-même de toute intrusion mentale (domination, lecture des pensées, etc.). Toutes les cibles doivent être dans un rayon de 10 mètres autour de lui.  --Note MJ| ~C **[Voir Macro-MJ](http://journal.roll20.net/handout/-MYKRTv92xXs4q1OSE1u)**~C }}
+
+
+!power {{ --inlinereplace|haut|?{Quelle hauteur?} --hroll|[[ [$niv] 1d0+5+@{selected|SAG}]] --name|Ailes celestes --!img|[img](https://s3.amazonaws.com/files.d20.io/images/221408785/deZHPw8dvar-MnB5RFS1MQ/med.jpg) --information|@{selected|character_name} deploie ses ailes, il s'envole à une hauteur de [!~haut$!] metres. il peut voler pendant [![^niv]!] tour --api_token-mod|_ids @{selected|token_id} _set statusmarkers|fluffy-wing:~haut$ --api_cof-effet-temp|ailesCelestes [^niv] _target @{selected|token_id} }}
+
+
+!power {{
+--inlinereplace|rep|?{BouclierPsi ? |oui|non}
+--name|Bouclier Psi
+--!img|[img](https://i.pinimg.com/originals/23/2b/ff/232bff5e4aa9dbea3de9487ebc0cd1ea.jpg)
+--information|@{selected|character_name} peut lancer bouclier Psi sur **@{selected|Voie_psychogene}** cibles dans un rayon de 10m
+--?! "~rep$" -eq "oui" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=bouclierPsi
+--?! "~rep$" -eq "oui" !? api_cof-set-attribute|bouclierPsi true _target @{target|token_id}
+--?! "~rep$" -eq "oui" !? !sort1| **@{selected|character_name}** Lance un bouclier psy sur **@{target|character_name}**
+--?! "~rep$" -eq "non" !? !sort2| **@{selected|character_name}** Enleve un bouclier psy sur **@{target|character_name}**
+--?! "~rep$" -eq "non" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=bouclierPsi|-bouclierPsi
+--?! "~rep$" -eq "non" !? api_cof-set-attribute|bouclierPsi false _target @{target|token_id}
+}}
+
+
+!power {{
+--name|Déchaînement d’acier (L) 
+--!img|[img](https://i.pinimg.com/originals/e7/b0/14/e7b014edc152187da18b56cd6ae256fb.jpg)
+--!information|Le Barbare parcourt 10 mètres en ligne droite en dépassant autant d’ennemis qu’il le souhaite. Il porte une attaque à chaque adversaire sur son passage. Il ne peut terminer son déplacement à un endroit occupé par un ennemi.
+}}
+
+Bonuse/malus attaque
+
+!token-mod --set bar3|[[0]]
+!token-mod --set bar3|[[?{Quel bonus/malus veux tu mettre à l'attaque ? |1,1|2,2|3,3|4,4|-1,-1|-2,-2|-3,-3|-4,-4|0,0}]]
+
+
+
+!cof-effet-temp dotGen(bon_quantique) 1d6+3 --valeur true
+
+!power {{	
+--name|Bon quantique
+--inlinereplace|rep|?{faire bon quantique ? |partir|revenir}
+--hroll|[[ [$niv] 1d6+3]]
+--!img|[img](https://c4.wallpaperflare.com/wallpaper/464/960/969/as-the-time-passes-by-anime-girl-clock-fire-wallpaper-thumb.jpg)
+--information|@{selected|character_name} « saute »  dans le futur,Il disparaît et réapparaît au même endroit le moment venu. Le joueur n’a pas besoin de choisir à l’avance la durée du pouvoir, il fait réapparaître son personnage au tour de son choix dans la limite de la durée maximum définie
+--?! "~rep$" -eq "partir" !? api_cof-effet-temp|messageRetarde(retour-bon-quantique) [^niv] _valeur fin-du-bon _secret _target @{selected|token_id}
+--?! "~rep$" -eq "partir" !? api_token-mod|_ids @{selected|token_id} _set tint_color|#00ffff
+--?! "~rep$" -eq "partir" !? !sort1| **@{selected|character_name}** saute dans le temps [![^niv]!] tour max
+--?! "~rep$" -eq "revenir" !? !sort2| **@{selected|character_name}** surgit d'une faille temporaire
+--?! "~rep$" -eq "revenir" !? api_token-mod|_ids @{selected|token_id} _set tint_color|transparent
+--?! "~rep$" -eq "revenir" !? api_cof-effet-temp|messageRetarde(retour-bon-quantique) 0 _valeur fin-du-bon _secret _target @{selected|token_id}
+}}
+
+!power {{	
+--name|armure de glace
+--inlinereplace|rep|?{Gestion de l'armue de glace ? |mettre|enlever}
+--hroll|[[ [$niv] 1d6+@{selected|CON}]]
+--!img|[img](https://i.pinimg.com/originals/14/b4/e2/14b4e273cbee6a02d61088dae9ecb8cd.png)
+--information|@{selected|character_name}  crée autour de lui une armure de glace ou se transforme lui-même en glace (au choix) 
+--?! "~rep$" -eq "mettre" !? api_cof-effet-temp|messageRetarde(armure-de-glace) [^niv] _valeur fin-de-l-armure _secret _target @{selected|token_id}
+--?! "~rep$" -eq "mettre" !? api_token-mod|_ids @{selected|token_id} _set tint_color|#00ffff
+--?! "~rep$" -eq "mettre" !? !sort1| **@{selected|character_name}** se recouvre de glace pour [![^niv]!] tour(s)
+--?! "~rep$" -eq "mettre" !? api_setattr|_charid @{target|character_id} _DEFBOUCLIERON|1 _DEFBOUCLIER|5 _immunite_froid|true _armure-glace|true
+--?! "~rep$" -eq "enlever" !? !sort2| **@{selected|character_name}** enleve son armure de glace 
+--?! "~rep$" -eq "enlever" !? api_token-mod|_ids @{selected|token_id} _set tint_color|transparent
+--?! "~rep$" -eq "enlever" !? api_cof-effet-temp|messageRetarde(armure-de-glace) 0 _valeur fin-de-l-armure _secret _target @{selected|token_id}
+--?! "~rep$" -eq "enlever" !? api_setattr|_charid @{target|character_id} _DEFBOUCLIERON|0 _DEFBOUCLIER|0 _immunite_froid|false _armure-glace|false
+}}
+
+!power {{	
+--name|test attribut groupe
+--api_setattr|_charid -M8BcJCeFh89-WhM5VBm,-M8BcIaOrE9lD4dOuNpt,-M7r5gyErAaMiBTeb7AJ,-M655ZOqK3Q4E2XSEK27,-M7rG-OrqhR73Et1_1qN _TESTTYPE|FOR _TESTDIFF|14
+}}
+
+!setattr --sel --Strength|15
+
+!power {{	 --name|armure de glace --inlinereplace|rep|?{Gestion de l'armue de glace ? |mettre|enlever} --hroll|[[ [$niv] 1d6+@{selected|CON}]] --!img|[img](https://i.pinimg.com/originals/14/b4/e2/14b4e273cbee6a02d61088dae9ecb8cd.png) --information|@{selected|character_name}  crée autour de lui une armure de glace ou se transforme lui-même en glace (au choix) --?! "~rep$" -eq "mettre" !? api_cof-effet-temp|messageRetarde(armure-de-glace) [^niv] _valeur fin-de-l-armure _secret _target @{selected|token_id} --?! "~rep$" -eq "mettre" !? api_token-mod|_ids @{selected|token_id} _set tint_color|#00ffff --?! "~rep$" -eq "mettre" !? !sort1| **@{selected|character_name}** se recouvre de glace pour [![^niv]!] tour(s) --?! "~rep$" -eq "mettre" !? api_setattr|_charid @{target|character_id} _DEFBOUCLIERON|1 _DEFBOUCLIER|5 _immunite_froid|true _armure-glace|true --?! "~rep$" -eq "enlever" !? !sort2| **@{selected|character_name}** enleve son armure de glace --?! "~rep$" -eq "enlever" !? api_token-mod|_ids @{selected|token_id} _set tint_color|transparent --?! "~rep$" -eq "enlever" !? api_cof-effet-temp|messageRetarde(armure-de-glace) 0 _valeur fin-de-l-armure _secret _target @{selected|token_id} --?! "~rep$" -eq "enlever" !? api_setattr|_charid @{target|character_id} _DEFBOUCLIERON|0 _DEFBOUCLIER|0 _immunite_froid|false _armure-glace|false }}
+
+
+[mettre fin](!&#13;#Actions)
+
+!power {{
+--name|Combo
+--!img|[img](https://www.jeuxactu.com/datas/jeux/m/y/my-hero-academia-one-s-justice/vn/my-hero-academia-one-s-5a215d4d181ee.jpg)
+--inlinereplace|combocible|@{selected|combo-cible}
+--inlinereplace|cible|@{target|token_id}
+--hroll|[[ [$niv] @{selected|combo}+1+1d0]]
+--information|À chaque fois qu’il réalise une attaque au contact – succès ou échec, attaque simple, capacité limitée, etc. – contre une créature, le joueur note un point de combo sur celle-ci
+--?! "~combocible$" -ne "@{target|token_id}" !? !test2|**Vous chancez de cible de combo, tous les points de combot sont remis à zero**
+--?! "~combocible$" -ne "@{target|token_id}" !? api_setattr|_charid @{selected|character_id} _combo-cible|~cible$ _combo|0 _mute
+--?! "~combocible$" -eq "@{target|token_id}" !? !test2|**Vous chancez [^niv] points de combo sur la cible**
+--?! "~combocible$" -eq "@{target|token_id}" !? api_setattr|_charid @{selected|character_id} _combo|[^niv] _combo-cible|~cible$ _mute
+}}
+	
+!power {{ --name|combo --!img|[img](https://www.jeuxactu.com/datas/jeux/m/y/my-hero-academia-one-s-justice/vn/my-hero-academia-one-s-5a215d4d181ee.jpg) --inlinereplace|combocible|@{selected|combo-cible} --inlinereplace|cible|@{target|token_id} --hroll|[[ [$niv] @{selected|combo}+1+1d0]] --information|à chaque fois qu’il réalise une attaque au contact – succès ou échec, attaque simple, capacité limitée, etc. – contre une créature, le joueur note un point de combo sur celle-ci --?! "~combocible$" -ne "@{target|token_id}" !? !test2|**vous chancez de cible de combo, tous les points de combot sont remis à zero** --?! "~combocible$" -ne "@{target|token_id}" !? api_setattr|_charid @{selected|character_id} _combo-cible|~cible$ _combo|0 _mute --?! "~combocible$" -eq "@{target|token_id}" !? !test2|**vous chancez [^niv] points de combo sur la cible** --?! "~combocible$" -eq "@{target|token_id}" !? api_setattr|_charid @{selected|character_id} _combo|[^niv] _combo-cible|~cible$ _mute }}
+
+!power {{
+--name|Don surhumain
+--!img|[img](https://manga-kun.com/wp-content/uploads/2020/10/all-might.jpg)
+--information|Désormais, lorsqu’un test est demandé pour l’une ou l’autre des caractéristiques choisies, il lance deux d20 et garde le meilleur résultat.
+--!bouton|~C[Faire un 1er jets](!&#13;#Jets)~C
+--!bouton2|~C[Faire un 2nd jets](!&#13;#Jets)~C
+}}
+
+!power {{	
+--name|Attaque finale 
+--!img|[img](https://www.jeuxactu.com/datas/jeux/m/y/my-hero-academia-one-s-justice/vn/my-hero-academia-one-s-5a215d4d181ee.jpg)
+--inlinereplace|ask|?{faire l'attaque finale?|oui,oui|non,non}
+--inlinereplace|combocible|@{selected|combo-cible}
+--hroll|[[ [$niv] @{selected|combo}+1d0]] [[ [$recul] 1d6]]
+--information|Lorsqu’il réalise l’attaque finale, le personnage obtient un bonus de +1 en attaque et +1d6 aux DM par point de combo accumulés sur cette créature. Une seule attaque finale peut être infligée à une créature pendant un combat. Les DM de base sont ceux qui correspondent à l’arme utilisée ou la capacité utilisée
+--?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? comboinfo|vous avez actuellement @{selected|combo} sur cette cible 
+--?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? api_cof-attack|@{selected|token_id} @{target|token_id} 1 _plus [^niv]d6 _bonusAttaque [^niv] _targetFx explosion-blood _if deAttaque @{target|force} _message la cible recule de [^recul] case(s) _endif
+--?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? api_cof-set-attribute|combo 0 _target @{selected|token_id}
+--?! "~combocible$" -ne "@{target|token_id}" -and "~ask$" -eq "oui" !? !test2|ce n'est pas la cible ou vous avez cumulé des combos
+--?! "~ask$" -eq "non" !? !test3|~C**l'attaque est annulée**~C
+}}
+
+!power {{	 --name|Attaque finale --!img|[img](https://www.jeuxactu.com/datas/jeux/m/y/my-hero-academia-one-s-justice/vn/my-hero-academia-one-s-5a215d4d181ee.jpg) --inlinereplace|ask|?{faire l'attaque finale?|oui,oui|non,non} --inlinereplace|combocible|@{selected|combo-cible} --hroll|[[ [$niv] @{selected|combo}+1d0]] [[ [$recul] 1d6]] --information|Lorsqu’il réalise l’attaque finale, le personnage obtient un bonus de +1 en attaque et +1d6 aux DM par point de combo accumulés sur cette créature. Une seule attaque finale peut être infligée à une créature pendant un combat. Les DM de base sont ceux qui correspondent à l’arme utilisée ou la capacité utilisée --?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? comboinfo|vous avez actuellement @{selected|combo} sur cette cible --?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? api_cof-attack|@{selected|token_id} @{target|token_id} 1 _plus [^niv]d6 _bonusAttaque [^niv] _targetFx explosion-blood _if deAttaque @{target|force} _message la cible recule de [^recul] case(s) _endif --?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? api_cof-set-attribute|combo 0 _target @{selected|token_id} --?! "~combocible$" -ne "@{target|token_id}" -and "~ask$" -eq "oui" !? !test2|ce n'est pas la cible ou vous avez cumulé des combos --?! "~ask$" -eq "non" !? !test3|~C**l'attaque est annulée**~C }}
+
+
+--?! "~combocible$" -eq "@{target|token_id}" -and "~ask$" -eq "oui" !? !bouton|~C[Attaque finale](!&#13;!cof-attack @{selected|token_id} @{target|token_id} ?{numero arme ?} &#45;&#45;plus [^niv]d6 &#45;&#45;bonusAttaque [^niv] &#45;&#45;targetFx explosion&#45;blood)~C
+
+!power {{	
+--name|Faire un jets
+--inlinereplace|don-surhumain|@{selected|Don-surhumain}
+--inlinereplace|don-surhumain2|@{selected|Don-surhumain|MAX}
+--inlinereplace|char|?{Faire un jet de |Charisme, CHA|Constitution, CON|Dextérité, DEX|Force, FOR|Intelligence, INT|Sagesse, SAG}
+--inlinereplace|bonus|?{avec un bonus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--!img|[img](https://images.squarespace-cdn.com/content/v1/57f55aae5016e18aceeac449/1556005790616-P9HXIF9ZQ6BIWL0C5TRD/ke17ZwdGBToddI8pDm48kAf-OpKpNsh_OjjU8JOdDKBZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpxq_kr5JmUSWzdbeQhVZ8KGVEAfgr0ybhloMHNIqvT8SMftTfHgE5YY4gbHxAHibYY/Tumbling-Dice_No-Text_GIF.gif)
+--?! "~don-surhumain$" -ne "" !? !information| Vous avez le **don suhumain** vous pouvez lancé **2 dés** et garder le meilleur sur les caractéristiques : **@{selected|Don-surhumain} et @{selected|Don-surhumain|MAX}**
+--!Information| vous avec choisi de faire un jets de **~char$** avec **~bonus$** en bonus
+--!jet|~C[Voir le resultat](!&#13;!cof-attack ~char$ &#45;&#45;bonus ~bonus$)~C
+--?! "~don-surhumain$" -eq "~char$" !? !jetsup|~C[Voir le 2eme resultat](!&#13;!cof-attack ~char$ &#45;&#45;bonus ~bonus$)~C
+--?! "~don-surhumain2$" -eq "~char$" !? !jetsup|~C[Voir le 2eme resultat](!&#13;!cof-attack ~char$ &#45;&#45;bonus ~bonus$)~C
+}}
+
+!power {{	
+--name|Gestion du recule
+--hroll|[[ [$deg1] 1d6]] [[ [$deg2] 2d6]] [[ [$deg3] 3d6]] [[ [$deg4] 4d6]] [[ [$deg5] 5d6]]
+--!img|[img](https://sm.pcmag.com/t/pcmag_ap/photo/o/outstandin/outstanding-presentation_zrm9.1024.png)
+--!degat1|[PJ ou PNJ](!&#13;!cof-dmg [^deg1] &#45;&#45;psave DEX 10)
+--!degat2|[obstacle simple](!&#13;!cof-dmg [^deg2])
+--?! "[^deg2]" -lt "8" !?!info2|l'obstacle simple est traversé [^deg2] vs 8
+--!degat3|[obstacle dur](!&#13;!cof-dmg [^deg3])
+--?! "[^deg3]" -lt "14" !?!info3|l'obstacle dur est traversé [^deg3] vs 16
+--!degat4|[obstacle tres solide](!&#13;!cof-dmg [^deg4])
+--?! "[^deg4]" -lt "20" !?!info4|l'obstacle tres solide est traversé [^deg4] vs 24
+--!degat4|[obstacle indestructible](!&#13;!cof-dmg [^deg5])
+}}
