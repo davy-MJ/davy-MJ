@@ -1,0 +1,223 @@
+!power {{
+--emote|@{target|character_name}
+--whisper|gm,@{target|character_name}
+--[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
+--inlinereplace|typ|?{Faire un jet de |Charisme,CHA |Constitution,CON|Dextérité,DEX|Force,FOR|Intelligence,INT|Sagesse,SAG}
+--inlinereplace|diff|?{Diffculté (vide pour secret)?}
+--inlinereplace|bonus|?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--name | @{target|character_name}  ~~~  Le Mj te demande un test
+--Cible|[!@{target|character_name}!]
+--Type | [!~typ$!]
+--?! "~diff$" -eq "" !? Difficulté | [!secret!]
+--?! "~diff$" -ne "" !? Difficulté | [!~diff$!]
+--Bonus/malus | [!~bonus$!]
+--!lancer2| ~C[Lancer le dé (automatique)](!&#13;!cof-jet ~typ$  ~diff$  &#45;&#45;bonus ~bonus$ &#45;&#45;target @{target|token_id})~C
+--!lancer3| ~C[Utiliser une compétence](!&#13;!cof-jet &#45;&#45;target @{target|token_id})~C
+}}
+
+!power {{
+--name | armure de Glasse
+--!information| [TTB][TRB][TDB colspan=10] [mj](https://static.icy-veins.com/images/heroes/icons/large/storm_ui_icon_jaina_frostarmor.jpg)[TDE] [TDB width='3%'][TDE] [TDB]une armure de glace vous recouvre + 6 en robustesse[TDE][TRE][TTE]
+--api_setattr|_charid @{target|character_id} _toughness|8
+}}
+
+
+@{target|character_}
+
+@{selected|strength} force
+@{selected|stamina} endurance
+@{selected|agility} agilité
+@{selected|dexterity} dexterité
+@{selected|fighting} combativité
+@{selected|intellect} intelligence 
+@{selected|awareness} sensibilité
+@{selected|presence} présence
+
+
+--emote|@{target|character_name}
+--whisper|gm,@{target|character_name}
+--[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
+--inlinereplace|typ|?{Faire un jet de |Force,FOR |Endurance,END|agilité,AGI|Combativité,COM|Intelligence,INT|Sensibilité,SEN|Présence,PRE|Dexterité,DEX|------,------|Acrotbatie,ACR|Athlétisme,ATH|Duperie,DUP|Intimidation,INTI|Investigation,INV|Perception,PER|Persuasion,PERS|Habileté,HAB|Discrétion,DIS|Technologie,TEC|Soins,SOI|Véhicules,VEH}
+--inlinereplace|diff|?{Diffculté (vide pour secret)?|10}
+--inlinereplace|bonus|?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--name | @{target|character_name}  ~~~  Le Mj te demande un test
+--Cible|[!@{target|character_name}!]
+--Type | [!~typ$!]
+--?! "~diff$" -eq "" !? Difficulté | [!secret!]
+--?! "~diff$" -ne "" !? Difficulté | [!~diff$!]
+--Bonus/malus | [!~bonus$!]
+--?! "~typ$" -eq "FOR" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|strength} _NAMECHARTEST|Force _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "FOR" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "END" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|stamina} _NAMECHARTEST|Endurance _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "END" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "AGI" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|agility} _NAMECHARTEST|Agilité _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "AGI" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "COM" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|fighting} _NAMECHARTEST|combativité _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "COM" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "INT" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|intellect} _NAMECHARTEST|Intelligence _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "INT" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "SEN" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|awareness} _NAMECHARTEST|Sensibilité _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "SEN" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "PRE" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|presence} _NAMECHARTEST|Présence _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "PRE" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "DEX" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|dexterity} _NAMECHARTEST|Dexterité _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "DEX" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "ACR" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|acrobatics} _NAMECHARTEST|Acrobatie _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "ACR" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "ATH" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|athletics} _NAMECHARTEST|Athlétisme _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "ATH" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "DUP" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|deception} _NAMECHARTEST|Duperie _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "DUP" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "INTI" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|intimidation} _NAMECHARTEST|Intimidation _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "INTI" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "INV" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|investigation} _NAMECHARTEST|Investigation _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "INV" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "PER" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|perception} _NAMECHARTEST|Perception _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "PER" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "PERS" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|persuasion} _NAMECHARTEST|Persuasion _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "PERS" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "HAB" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|sleightofhand} _NAMECHARTEST|Habilité _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "HAB" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "DIS" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|stealth} _NAMECHARTEST|Discrétion _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "DIS" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "TEC" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|technology} _NAMECHARTEST|Technologie  _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "TEC" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "SOI" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|treatment} _NAMECHARTEST|Soins  _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "SOI" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+--?! "~typ$" -eq "VEH" !? api_setattr|_charid @{target|character_id} _VARCHARTEST|@{target|vehicles} _NAMECHARTEST|Véhicules  _DIFFTEST|~diff$ _BONUSTEST|~bonus$
+--?! "~typ$" -eq "VEH" !? !lancer2| ~C[lancer](!&#13;#test-char)~C
+}}
+
+
+&{template:roll}{{name=@{target|character_name}}}[[ ceil(abs( [[ ([[1d20+@{target|VARCHARTEST}+@{target|BONUSTEST}]] - [[@{target|DIFFTEST}]]) ]]/5  )) ]] {{trait=@{target|NAMECHARTEST}}}  {{extras= Resultat``**$[[0]]**`` Difficulté ``$[[1]]`` Diff``$[[2]]`` Degrés``$[[3]]``}}
+
+
+!power {{
+--emote|[MJ](https://s3.amazonaws.com/files.d20.io/images/311329923/4Zrr6jR_ke3Z5wvHBkrGsA/max.png)
+ --target_list|@{target|token_id}
+--tokenid|@{selected|token_id}
+--name | Sans Armes
+--Type | contact
+--Cible|[!@{target|character_name}!]
+--Resultat | [[ [$Atk] 1d20+@{selected|contact}-?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5} ]] VS [[ [$DEF] [NH] 1D0+@{target|parry}+10]]
+--?!$Atk -ge $DEF !? resutlat|Touché 
+--?!$Atk -lt $DEF !? resutlat|Echec
+--?!$Atk.base -eq "20" !? !critque|~C C'est une reussite critique~C
+--?!$Atk.base -eq "1" !? !fumble|~C C'est un echec critique~C
+--?!$Atk -ge $DEF -and "@{target|type}" -eq "hero" !? !lancer2| ~C[Test de robustesse ](!&#13;#test-robustesse)~C
+--?!$Atk -ge $DEF -and "@{target|type}" -eq "sbire" !? !lancer2| ~C[Test de robustesse sbire](!&#13;#test-robustesse-sbire)~C
+--?!$Atk -ge $DEF -and $Atk.base -eq "20" !? api_setattr|_charid @{target|character_id} _DEGATARME|[[17+5]]
+--?!$Atk -ge $DEF -and $Atk.base -ne "20" !? api_setattr|_charid @{target|character_id} _DEGATARME|17
+}}
+
+
+
+!power {{
+--emote|[MJ](https://s3.amazonaws.com/files.d20.io/images/311329923/4Zrr6jR_ke3Z5wvHBkrGsA/max.png)
+ --target_list|@{target|token_id}
+--tokenid|@{selected|token_id}
+--replacement|?{avec quelle arme?|Sans arme,Sans-arme|Pistolet,pistolet}
+--inlinereplace|bonus|?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--name |~AttackName$
+--Type | ~AttackType$
+--Cible|[!@{target|character_name}!]
+--bonus/malus|~bonus$
+--?!"~AttackType$" -eq "contact" !? Resultat | [[ [$Atkc] 1d20+@{selected|contact}+~bonus$ ]] VS [[ [$DEF] [NH] 1D0+@{target|parry}+10]]
+--?!"~AttackType$" -eq "distance" !? Resultat | [[ [$Atkd] 1d20+@{selected|distance}+~bonus$ ]] VS [[ [$DEF] [NH] 1D0+@{target|parry}+10]]
+--?!$Atkc -ge $DEF -and "~AttackType$" -eq "contact" !? resutlat contact|Touché 
+--?!$Atkc -lt $DEF -and "~AttackType$" -eq "contact" !? resutlat contact|Echec
+--?!$Atkd -ge $DEF -and "~AttackType$" -eq "distance" !? resutlat distance|Touché 
+--?!$Atkd -lt $DEF -and "~AttackType$" -eq "distance" !? resutlat distance|Echec
+--?!$Atkc.base -ge "~AttackCritique$" -and "~AttackType$" -eq "contact" !? !critque|~C C'est une reussite critique~C
+--?!$Atkd.base -ge "~AttackCritique$" -and "~AttackType$" -eq "distance" !? !critque|~C C'est une reussite critique~C
+--?!$Atkc.base -eq "1" -and "~AttackType$" -eq "contact" !? !fumble|~C C'est un echec critique~C
+--?!$Atkd.base -eq "1" -and "~AttackType$" -eq "distance" !? !fumble|~C C'est un echec critique~C
+--?!$Atkc -ge $DEF -and "@{target|type}" -eq "hero" -and "~AttackType$" -eq "contact"!? !lancer2| ~C[Test de robustesse ](!&#13;#test-robustesse)~C
+--?!$Atkc -ge $DEF -and "@{target|type}" -eq "sbire" -and "~AttackType$" -eq "contact"!? !lancer2| ~C[Test de robustesse sbire](!&#13;#test-robustesse-sbire)~C
+--?!$Atkd -ge $DEF -and "@{target|type}" -eq "hero" -and "~AttackType$" -eq "distance"!? !lancer2| ~C[Test de robustesse ](!&#13;#test-robustesse)~C
+--?!$Atkd -ge $DEF -and "@{target|type}" -eq "sbire" -and "~AttackType$" -eq "distance"!? !lancer2| ~C[Test de robustesse sbire](!&#13;#test-robustesse-sbire)~C
+--?!$Atkc -ge $DEF -and $Atk.base -ge "~AttackCritique$" -and "~AttackType$" -eq "contact" !? api_setattr|_charid @{target|character_id} _DEGATARME|~AttackDegat$
+--?!$Atkc -ge $DEF -and $Atk.base -lt "~AttackCritique$" -and "~AttackType$" -eq "contact" !? api_setattr|_charid @{target|character_id} _DEGATARME|~CritDamage$
+--?!$Atkd -ge $DEF -and $Atk.base -ge "~AttackCritique$" -and "~AttackType$" -eq "distance" !? api_setattr|_charid @{target|character_id} _DEGATARME|~AttackDegat$
+--?!$Atkd -ge $DEF -and $Atk.base -lt "~AttackCritique$" -and "~AttackType$" -eq "distance" !? api_setattr|_charid @{target|character_id} _DEGATARME|~CritDamage$
+}}
+
+
+
+!power {{
+--inlinereplace|contact|?{Valeur combat contact?}
+--inlinereplace|distance|?{Valeur combat distance?}
+--inlinereplace|type|?{Quel type de pnj?|sbire,sbire|hero,hero}
+--name | Capacité de combat
+--Cible|[!@{target|character_name}!]
+--Contact| ~contact$
+--Distance| ~distance$
+--type| ~type$
+--api_setattr|_charid @{target|character_id} _contact|~contact$ _distance|~distance$ _type|~type$
+}}
+
+!power {{
+--name | remise a zero
+--Cible|[!@{target|character_name}!]
+--information | vous avez remis les variable DEGATARME , DEGREEDEGAT à zero  
+--api_setattr|_charid @{target|character_id} _DEGATARME|0 _DEGREEDEGAT|0
+}}
+
+	
+&{template:roll}{{name=@{target|character_name}}}[[ ceil(abs( [[ ([[1d20+@{target|toughness}]] - [[1D0+20]]) ]]/5  )) ]] {{trait=robustesse}}  {{extras= Resultat``**$[[0]]**`` Difficulté ``$[[1]]`` Diff``$[[2]]`` Degrés``$[[3]]``}}
+	
+		
+!power {{
+--name|Test de robustesse
+--[MJ](https://st.depositphotos.com/2492641/3018/v/450/depositphotos_30182125-stock-illustration-comic-comic-book-comic-bubble.jpg)
+--degrées de blessure| [[ [$deg] ceil((1d20+@{selected|toughness}-[[@{selected|DEGATARME}+@{selected|bar3|current}]])/5))]] 
+--?!$deg -ge "0" !? Test de robustesse|**Réussi** 
+--?!$deg -ge "0" !? echec|**un degré** Les dégâts n’ont aucun effet
+--?!$deg -eq "-1" !? Test de robustesse|**Echec**  
+--?!$deg -eq "-2" !? Test de robustesse|**Echec**  
+--?!$deg -eq "-3" !? Test de robustesse|**Echec** 
+--?!$deg -eq "-4" !? Test de robustesse|**Echec** 
+--?!$deg -lt "0" !? api_token-mod|_ids @{selected|token_id} _set _set bar3_current|+1
+}}
+
+
+!power {{
+--name|Test de robustesse
+--[MJ](https://st.depositphotos.com/2492641/3018/v/450/depositphotos_30182125-stock-illustration-comic-comic-book-comic-bubble.jpg)
+--Diff|[[ [$rtest3][[ [$rtest] 1d20+@{selected|toughness}]] - [[ [$rtest2] @{selected|DEGATARME}+@{selected|bar3|current}+1D0]]+[NH]1D0]]
+--?!$rtest3 -ge "0" !? Test de robustesse|**Réussi** 
+--?!$rtest3 -lt "0" !? Test de robustesse|**Echec**
+--?!$rtest3 -lt "0" -and $rtest3 -ge "-5" !? Degree|1 
+--?!$rtest3 -lt "-5" -and $rtest3 -ge "-10" !? Degree|2 [!@{selected|character_name}!] est **hébétée**
+--?!$rtest3 -lt "-10" -and $rtest3 -ge "-15" !? Degree|3 [!@{selected|character_name}!] est **chancelant**
+--?!$rtest3 -lt "-15" -and $rtest3 -ge "-20" !? Degree|4 [!@{selected|character_name}!] est **neutralisée**
+--?!$rtest3 -lt "0" !? api_token-mod|_ids @{selected|token_id} _set bar3_current|+1
+}}
+
+!power {{
+--name|Test de robustesse Sbire
+--[MJ](https://st.depositphotos.com/2492641/3018/v/450/depositphotos_30182125-stock-illustration-comic-comic-book-comic-bubble.jpg)
+--Diff|[[ [$rtest3][[ [$rtest] 1d20+@{selected|toughness}]] - [[ [$rtest2] @{selected|DEGATARME}+@{selected|bar3|current}+1D0]]+[NH]1D0]]
+--?!$rtest3 -ge "0" !? Test de robustesse|**Réussi** 
+--?!$rtest3 -lt "0" !? Test de robustesse|**Echec**
+--?!$rtest3 -lt "0" !? Resultat|[!@{selected|character_name}!] est **neutralisée**
+--?!$rtest3 -lt "0" !? api_token-mod|_ids @{selected|token_id}  _set bar3_current|+1 _set statusmarkers|=dead
+}}
+
+
+!power {{
+--name|Changer etat
+--[MJ](https://st.depositphotos.com/2492641/3018/v/450/depositphotos_30182125-stock-illustration-comic-comic-book-comic-bubble.jpg)
+--inlinereplace|etat|?{Diffculté (vide pour secret)?|normal,normal|hébété,hébeté|chancelant,chancelant|neutralisé,neutralisé}
+--?!"~etat$" -eq "normal" !? etat|**normal** 
+--?!"~etat$" -eq "normal" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|-sleepy|-broken-heart|-dead
+--?!"~etat$" -eq "hébeté" !? etat|**hébeté**
+--?!"~etat$" -eq "hébeté" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=sleepy
+--?!"~etat$" -eq "chancelant" !? etat|**chancelant**
+--?!"~etat$" -eq "chancelant" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=broken-heart
+--?!"~etat$" -eq "neutralisé" !? etat|**neutralisé**
+--?!"~etat$" -eq "neutralisé" !? api_token-mod|_ids @{target|token_id} _set statusmarkers|=dead
+}}
+
+
+&{template:roll} {{name=@{character_name}}} {{descriptor=@{attack_damage_type}}} {{damage=[[@{dc}]]}} {{trait=@{attack_name}}} {{result=[[1d20cs>@{attack_crit} + @{attack} + (@{penalty_general} [Conditions])]]}}
