@@ -1,3 +1,967 @@
+!power {{ 
+--name|A table 
+--[patte](https://i.pinimg.com/564x/6e/94/1f/6e941f4f499910ba99f971b2b8924252.jpg)
+--hroll|[[ [$note] 1d20]]
+--Boisson|[[1t[Nom-boisson]]]
+--Plat|[[1t[Nom-boisson]]]
+--Prix|[[1d10]]pa
+--Qualité|[^note]/20
+--?? $note.base > 15 ?? Un festin de roi:| vous gagnez 1d6pv
+--?? $note.base < 5 ?? Mais c'est dégueulasse:| vous perdez 1d4pv
+}} 
+
+-----------------------------
+
+
+!power {{ 
+--whisper|GM
+--name|Description PNJ
+--[patte](https://i.pinimg.com/564x/e4/bf/d1/e4bfd1ae64549769d7440e39d3004283.jpg)
+--hroll|[[ [$ami] 1d10]]
+--age|[[1t[tab-age]]]
+--taille|[[1t[tab-taille]]]
+--Poid|[[1t[tab-poid]]]
+--cheveux|[[1t[tab-cheveux]]]
+--couleur|[[1t[tab-couleur]]]
+--pilosité|[[1t[tab-pilo]]]
+--?? $ami.base == 10 ?? relation:| tres amical +2
+--?? $ami.base < 3 ?? relation:| tres amical -2
+}}
+
+-----------------------------
+
+!power {{ 
+--whisper|GM
+--name|Musique
+--reve|[lancer](!&#13;#sound-reve)
+--
+}}
+
+
+-----------------------------
+
+!power {{ 
+--name|Rosha
+--[img](https://i.pinimg.com/564x/e5/8c/5b/e58c5bf4128d86b25801987f8e061ba7.jpg)
+--hroll|[[ [$var] 1d20+@{selected|FOR}]]
+--Resultat|[^var]
+--?? $var.base >= 15 ?? Nombre de sac de rosha:| 5
+--?? $var.base >= 10 AND $var.base < 14 ?? Nombre de sac de rosha:| 4
+--?? $var.base < 9 AND $var.base > 5 ?? Nombre de sac de rosha :| 3
+--?? $var.base <= 5 ?? Nombre de sac de rosha :| 2
+}} 
+
+!power {{ 
+--name|Rosha
+--[img](https://i.pinimg.com/564x/e5/8c/5b/e58c5bf4128d86b25801987f8e061ba7.jpg)
+--hroll|[[ [$var] 1d20+@{selected|FOR}]]
+--Resultat|[^var]
+--?? $var.base >= 15 ?? Nombre de sac de rosha:| 5
+--?? $var.base >= 10 AND $var.base < 14 ?? Nombre de sac de rosha:| 4
+--?? $var.base < 9 AND $var.base > 5 ?? Nombre de sac de rosha :| 3
+--?? $var.base <= 5 ?? Nombre de sac de rosha :| 2
+}} 
+-----------------------------
+
+-----------------------------
+
+!power {{ 
+--name|A table 
+--[patte](https://i.pinimg.com/564x/6e/94/1f/6e941f4f499910ba99f971b2b8924252.jpg)
+--hroll|[[ [$note] 1d20]]
+--Boisson|[[1t[Nom-boisson]]]
+--Plat|[[1t[Nom-boisson]]]
+--Prix|[[1d10]]pa
+--Qualité|[^note]/20
+--?? $note.base > 15 ?? Un festin de roi:| vous gagnez 1d6pv
+--?? $note.base < 5 ?? Mais c'est dégueulasse:| vous perdez 1d4pv
+}} 
+
+
+
+----------------------------
+
+!power {{
+--whisper|GM
+--name|En plein air
+--[vol](https://thumbs.gfycat.com/RegalSpiritedArrowworm-size_restricted.gif)
+--resultat|[[1t[table-rencontre-vol-desert]]]
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|En plein air
+--[vol](https://thumbs.gfycat.com/RegalSpiritedArrowworm-size_restricted.gif)
+--hroll|[[ [$effet] 1d10]]
+--?? $effet.base == 1 ?? Vent magique	:| Gnomoptère V12 prend de l'attitude, la corde se tend de plus en plus, il faut réagir **[Jet de Dex 15](!&#13;#demande-test)** ou **[Jet de FOR 15](!&#13;#demande-test)** 
+--?? $effet.base == 1 ?? bonus:| +2 si accroche réussit
+--?? $effet.base == 1 ?? Echec:| la corde se romp, le whatelion s'éloigne, le planeur va chuter lentement vers le sol 1 case
+--?? $effet.base == 2 ?? Changement de direction:| Le Whaletelion ne semble plus etre attiré par le son emit par le faucon, il change de direction **[Jet charisme 15](!&#13;#demande-test)** **[Jet attaque magique 15](!&#13;#demande-test)**
+--?? $effet.base == 2 ?? Echec:| le faucon va s'éloigné 1 case par round, le whateltion va se déplacer vers la case [[1d6]]
+--?? $effet.base == 2 ?? bonus:| +2 si consigne réussit
+--?? $effet.base == 3 ?? Un paysage magnifique:| Le desert de la chute est un endroit magnifique, vous profitez de votre vol
+--?? $effet.base == 3 ?? bonus:| 1 point de chance / les autres effet négatifs sont annulés
+--?? $effet.base == 4 ?? Un bourdonement :| Plusieurs point apparaissent à l'horizon, suivi d'un bourdement sourd, tres vite vous vous apercevez que des Striges qui foncent sur vous
+--?? $effet.base == 5 ?? Mal de l'air:| En haut, en bas, à droite,à gauche, faites un **[Jet CONS 15](!&#13;#demande-test)**
+--?? $effet.base == 5 ?? Echec:| vous vous sentez vraiment pas bien effet passer en > 1d12 
+--?? $effet.base == 5 ?? bonus:| +2 si habitacle réussit
+--?? $effet.base == 6 ?? Gouvernail bloqué:| le gouvernail du Gnomoptère V12 est bloqué, le planeur tire tout droit **[Jet de DEX 15](!&#13;#demande-test)** ou **[Jet de FOR 15](!&#13;#demande-test)**
+--?? $effet.base == 6 ?? Echec:| la corde se romp le planeur va chuter lentement vers le sol 1 case
+--?? $effet.base == 6 ?? bonus:| +2 si gouvernail réussit
+--?? $effet.base == 7 ?? Nuage de sable:| vous traversez un épais nuage de sable, vous etes fouetté par les grains, et vous avez du mal à ouvrir les yeux **[Jet de CONS 15](!&#13;#demande-test)** 
+--?? $effet.base == 7 ?? Echec:| vous etes aveuglé, tant que vous ne trouvez pas une solution vous passez sur 1D12
+--?? $effet.base == 7 ?? bonus:| +2 si habitacle réussit 
+--?? $effet.base == 8 ?? Déchirure sur l’aile:| un bruit de tissu déchiré sur votre droite vient perturbé votre vol **[Jet de DEX 15](!&#13;#demande-test)** ou **[Jet de SAG 15](!&#13;#demande-test)**
+--?? $effet.base == 8 ?? Echec:| l'aile commence à se dechirer, il faut soit atterir d'urgence, ou tente de continuer le vol comme ça, mais la prochaine fois, l'aile se brise et c'est la chute 10d6 (30m)
+--?? $effet.base == 8 ?? Déchirure sur l’aile:| un bruit de tissu déchiré sur votre droite vient perturbé votre vol
+--?? $effet.base == 9 ?? Lumiére divine:| vous avez une impression étrange, comme si le planeur avait deux ailes suplémentaires.
+--?? $effet.base == 9 ?? bonus:| le prochain test aura un bonus de +4
+--?? $effet.base == 10 ?? Bon appetit:| le whatelion va beaucoup plus vite que le faucon, il ouvre sa large bouche il s'apprete à avaler le faucon
+--?? $effet.base == 10 ?? bonus:| + si consigne réussit
+--?? $effet.base == 10 ?? Echec:| le faucon est avalé par le whatelion, il va se diriger de façon anarchique 1D6 direction 1 étant le nord
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Le mal du desert
+--[magie](https://cdna.artstation.com/p/assets/images/images/017/778/398/original/evgeny-starostin-rotate.gif)
+--hroll|[[ [$magie] 1d10]]
+--?? $magie.base == 1 ?? effet:| le sort est multiplié par 2 / ou l'effet est tres empliflié
+--?? $magie.base == 2 ?? effet:| le sort est annulé
+--?? $magie.base == 3 ?? effet:| le sort est [Lumiére](!&#13;#lumiere) est lancé en meme temps 
+--?? $magie.base == 4 ?? effet:| le sort se lance normalement
+--?? $magie.base == 5 ?? effet:| le sort du sort est divisé par 2 / ou l'effet est moindre
+--?? $magie.base == 6 ?? effet:| le sort se propage à tous les personnages autour de la cible
+--?? $magie.base == 7 ?? effet:| le sort entraine une réplique, le magicien peut relancer un sort de son choix
+--?? $magie.base == 8 ?? effet:| le sort entraine une explosion magique qui cause [[2d6]] dégats sur [[1d10]]metre
+--?? $magie.base == 9 ?? effet:| le sort déclanche **Arrêt du temps**
+--?? $magie.base == 10 ?? effet:| le sort lance[forme gazeuse](!&#13;#forme-gazeuse) sur du lanceur 
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Le mal du desert
+--[magie](https://cdna.artstation.com/p/assets/images/images/017/778/398/original/evgeny-starostin-rotate.gif)
+--hroll|[[ [$magie] 1d10]]
+--?? $magie.base == 1 ?? effet:| le sort est multiplié par 2 / ou l'effet est tres empliflié
+--?? $magie.base == 2 ?? effet:| le sort est annulé
+--?? $magie.base == 3 ?? effet:| le sort est [Lumiére](!&#13;#lumiere) est lancé en meme temps 
+--?? $magie.base == 4 ?? effet:| le sort se lance normalement
+--?? $magie.base == 5 ?? effet:| le sort du sort est divisé par 2 / ou l'effet est moindre
+--?? $magie.base == 6 ?? effet:| le sort se propage à tous les personnages autour de la cible
+--?? $magie.base == 7 ?? effet:| le sort entraine une réplique, le magicien peut relancer un sort de son choix
+--?? $magie.base == 8 ?? effet:| le sort entraine une explosion magique qui cause [[2d6]] dégats sur [[1d10]]metre
+--?? $magie.base == 9 ?? effet:| le sort déclanche **Arrêt du temps**
+--?? $magie.base == 10 ?? effet:| le sort lance[forme gazeuse](!&#13;#forme-gazeuse) sur du lanceur 
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Desert
+--format|davy
+-- |~L[<<](!&#13;#GM)~L
+--Voyager en planer |~R[lancer](!&#13;#Voyage-planeur)~R
+--Le mal du desert |~R[lancer](!&#13;#mal-desert)~R
+--Les travaux sur le planeur|~R[lancer](!&#13;#travaux-planeur)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Tresor
+--format|davy
+-- |~L[<<](!&#13;#GM)~L
+--Tresor de rencontre|~R[lancer](!&#13;#tresor-rencontre)~R
+--Tresor de Cornevaire |~R[lancer](!&#13;#tresor-cornevaire)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Rencontre
+--format|davy
+-- |~L[<<](!&#13;#GM)~L
+--Rencontre simple foret|~R[lancer](!&#13;#rencontre)~R
+--Rencontre simple nuit |~R[lancer](!&#13;#nuit-effect)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Boite à outils
+--format|davy
+-- |~L[<<](!&#13;#GM)~L
+--Nouveau jour |~R[lancer](!&#13;#nouveau-jour)~R
+--Soins |~R[lancer](!&#13;#soin)~R
+--A Table |~R[lancer](!&#13;#A-table)~R
+--Trouver un livre|~R[lancer](!&#13;#chercher_livre)~R
+--Concours biere |~R[lancer](!&#13;#concours-biere)~R
+--Description PNJ |~R[lancer](!&#13;#description-pnj)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Lien pour le GM
+--format|davy
+--[magie](https://s3.amazonaws.com/files.d20.io/images/151061590/bcCQZDAO0kRwgm4v4hKM_Q/med.jpg)
+--La boite à outils |~R[Voir](!&#13;#GM-outil)~R
+--Musiques|~R[Voir](!&#13;#musique)~R
+--Les rencontres |~R[Voir](!&#13;#GM-rencontre)~R
+--Tresor |~R[Voir](!&#13;#GM-tresor)~R
+--Voyage|~~~
+--Montagne |~R[Voir](!&#13;#montage)~R
+--Villa Adora |~R[Voir](!&#13;#Entree-villa-adora)~R
+--Le desert |~R[Voir](!&#13;#GM-desert)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|La montagne
+--format|davy
+--[montagne](https://s3.amazonaws.com/files.d20.io/images/138185456/zUUnZbTr7XBwFD4ybIv8lw/max.jpg)
+--Effet de la montagne |[[1t[effet-montagne]]]
+--Difficulté |[[8+1d6]]
+--Degat |[[1d10]]
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Tresor
+--format|davy
+--[tresor](http://francheska45.f.r.pic.centerblog.net/232b893d.gif)
+--Facile|~R[Voir](!&#13;#tresor-facile)~R
+--moyen |~R[Voir](!&#13;#tresor-moyen)~R
+--Difficile |~R[Voir](!&#13;#tresor-difficile)~R
+--Tres difficile |~R[Voir](!&#13;#tresor-tres-difficile)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|information
+-test|test
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Tresor facile
+--format|davy
+--[tresor](http://francheska45.f.r.pic.centerblog.net/232b893d.gif)
+--Piece d'or |[[1d6]]
+--Piece d'argent |[[1d10]]
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Tresor moyen
+--format|davy
+--[tresor](http://francheska45.f.r.pic.centerblog.net/232b893d.gif)
+--Piece d'or |[[1d10]]
+--Piece d'argent |[[1d20]]
+}}	
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Tresor difficile
+--format|davy
+--[tresor](http://francheska45.f.r.pic.centerblog.net/232b893d.gif)
+--Piece d'or |[[1d50]]
+--Piece d'argent |[[1d100]]
+--Objet |[[1t[loot-objet-simple]]]
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Concours de Biere
+--format|davy
+--hroll|[[ [$diff] 1d10+10 ]] [[ [$nbj] 1d10]] [[ [$J1] 1d20]] [[ [$J2] 1d20]] [[ [$J3] 1d20]] [[ [$J4] 1d20]] [[ [$J5] 1d20]] [[ [$J6] 1d20]] [[ [$J7] 1d20]] [[ [$J8] 1d20]] [[ [$J9] 1d20]] [[ [$J10] 1d20]] 
+--[concours](https://i.pinimg.com/564x/c9/db/e2/c9dbe2f0d66427ac65a959cf872b10b8.jpg)
+--Nom de la boisson |[[1t[Nom-boisson]]]
+--Nombre de participant| [![^nbj]!]
+--Difficulté | [![^diff]!]
+--?? $diff.total < $J1.total AND $nbj.total > 0 ?? participant 1 | reussit [^diff]x[^J1] 
+--?? $diff.total < $J2.total AND $nbj.total > 1 ?? participant 2 | reussit [^diff]x[^J2] 
+--?? $diff.total < $J3.total AND $nbj.total > 2 ?? participant 3 | reussit [^diff]x[^J3]
+--?? $diff.total < $J4.total AND $nbj.total > 3 ?? participant 4 | reussit [^diff]x[^J4]
+--?? $diff.total < $J5.total AND $nbj.total > 4 ?? participant 5 | reussit [^diff]x[^J5]
+--?? $diff.total < $J6.total AND $nbj.total > 5 ?? participant 6 | reussit [^diff]x[^J6]
+--?? $diff.total < $J7.total AND $nbj.total > 6 ?? participant 7 | reussit [^diff]x[^J7]
+--?? $diff.total < $J8.total AND $nbj.total > 7 ?? participant 8 | reussit [^diff]x[^J8]
+--?? $diff.total < $J9.total AND $nbj.total > 8 ?? participant 9 | reussit [^diff]x[^J9]
+--?? $diff.total < $J10.total AND $nbj.total > 9?? participant 10 | reussit [^diff]x[^J10]
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Rencontre
+--format|davy
+--[tresor](https://i.pinimg.com/564x/f3/eb/52/f3eb524dace826b0f6d9263d9357a9cb.jpg)
+--Evenement|[[1t[table-rencontre]]]
+--nombre |[[1d6]]
+--Esprit |[[1t[etat-esprit]]]
+}}
+
+!power {{
+--whisper|GM
+--name|Nom de ta carte
+--resultat-table |[[1t[liste-folie]]]
+}}
+
+
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Rencontre feu de camp
+--format|davy
+--[tresor](https://i.pinimg.com/originals/b6/a5/9a/b6a59ac2db173caeb6a10d2b4873b9c3.gif)
+--Evenement|[[1t[nuit-event]]]
+--tour |[[1d6]]
+--Rencontre |~R[Lancer](!&#13;#rencontre)~R
+}}
+
+-----------------------------
+
+
+!power {{
+--whisper|GM
+--name|Tresor Cornevaire repaire
+--format|davy
+--[tresor](http://francheska45.f.r.pic.centerblog.net/232b893d.gif)
+--Piece d'or |[[1d100]]
+--ambre jaune|[[1d4!-1]]
+--ambre orange|[[1d4!-1]]
+--ambre verte|[[1d4!-1]]
+--rosha orange sachet|[[1d4]]
+--rosha brun sachet|[[1d4]]
+--rosha blanc sachet|[[1d4]]
+}}
+
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Tresor tres difficile
+--format|davy
+--[tresor](http://francheska45.f.r.pic.centerblog.net/232b893d.gif)
+--Piece de platine|[[1d50]]
+--Piece d'or |[[1d100]]
+--Objet	simple |[[1t[loot-objet-simple]]]
+--Objet |[[1t[loot-objet-rare]]]   
+--lien|~C**[VOIR LES OBJETS](https://drive.google.com/file/d/1U-durKnubXDrHsQNjacxB6psyOAfwMrO/view)**~C
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Les livres
+--format|davy
+-Roll|[[ [$Roll] ?{Advantage?} ]]
+--[tresor](https://s3.amazonaws.com/files.d20.io/images/154542853/l99pokC0Vznrw3bZlFsgbA/med.jpg)
+--test |[^Roll]
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--name|Villa Adora
+--format|davy
+--hroll|[[ [$cote] 1d8 ]]  [[ [$ESC] 1d10+5 ]] [[ [$DECT] 1d20+5]] [[ [$chien1] 1d8 ]] [[ [$chien2] 1d8 ]] 
+--[tresor](https://i.pinimg.com/564x/ac/50/94/ac50943a3b4bc0bb2e59ebdfdb6b175d.jpg)
+--?? $cote.total == 1 ?? Cote|les joueurs arrivent du coté NORD EST
+--?? $cote.total == 2 ?? Cote|les joueurs arrivent du coté NORD NORD
+--?? $cote.total == 3 ?? Cote|les joueurs arrivent du coté NORD OUEST
+--?? $cote.total == 4 ?? Cote|les joueurs arrivent du coté OUEST
+--?? $cote.total == 5 ?? Cote|les joueurs arrivent du coté SUD OUEST
+--?? $cote.total == 6 ?? Cote|les joueurs arrivent du coté SUD SUD
+--?? $cote.total == 7 ?? Cote|les joueurs arrivent du coté SUD EST
+--?? $cote.total == 8 ?? Cote|les joueurs arrivent du coté EST
+--?? $chien1.total == 1 ?? 1er chien|il y a un chien du coté NORD EST
+--?? $chien1.total == 2 ?? 1er chien|il y a un chien du coté NORD NORD
+--?? $chien1.total == 3 ?? 1er chien|il y a un chien du coté NORD OUEST
+--?? $chien1.total == 4 ?? 1er chien|il y a un chien du coté OUEST
+--?? $chien1.total == 5 ?? 1er chien|il y a un chien du coté SUD OUEST
+--?? $chien1.total == 6 ?? 1er chien|il y a un chien du coté SUD SUD
+--?? $chien1.total == 7 ?? 1er chien|il y a un chien du coté SUD EST
+--?? $chien1.total == 8 ?? 1er chien|il y a un chien du coté EST
+--?? $chien2.total == 1 ?? 2eme chien|il y a un chien du coté NORD EST
+--?? $chien2.total == 2 ?? 2eme chien|il y a un chien du coté NORD NORD
+--?? $chien2.total == 3 ?? 2eme chien|il y a un chien du coté NORD OUEST
+--?? $chien2.total == 4 ?? 2eme chien|il y a un chien du coté OUEST
+--?? $chien2.total == 5 ?? 2eme chien|il y a un chien du coté SUD OUEST
+--?? $chien2.total == 6 ?? 2eme chien|il y a un chien du coté SUD SUD
+--?? $chien2.total == 7 ?? 2eme chien|il y a un chien du coté SUD EST
+--?? $chien2.total == 8 ?? 2eme chien|il y a un chien du coté EST
+--Escalade| la diffculté est de [^ESC]
+--??$cote.total == $chien1 OR $cote.total == $chien2 ?? Detection| Un chien est dans le meme secteur, Demander aux joueurs de faire un jet de DEX avec un bonus de 5
+}}
+
+-----------------------------
+
+!power {{
+  --inlinereplace|SkillName|?{Resultat de recherche?}
+  --tokenid|@{selected|token_id}
+  --name|~SkillName$ Saving Throw
+  --format|@{selected|character_name}
+  --emote|@{selected|character_name} attempts ~SkillName$ saving throw
+  --?! "~SkillName$" -eq "5" !? Livre|[[1t[Livres]]]
+  --?! "~SkillName$" -eq "Dexterity" !? Dexterity|save result is [[ ?{Advantage?|Normal,1d20|Advantage,2d20kh1|Disadvantage,2d20kl1} + @{selected|dexterity_save_bonus} ]]
+  --?! "~SkillName$" -eq "Constitution" !? Constitution|save result is [[ ?{Advantage?|Normal,1d20|Advantage,2d20kh1|Disadvantage,2d20kl1} + @{selected|constitution_save_bonus} ]]
+  --?! "~SkillName$" -eq "Intelligence" !? Intelligence|save result is [[ ?{Advantage?|Normal,1d20|Advantage,2d20kh1|Disadvantage,2d20kl1} + @{selected|intelligence_save_bonus} ]]
+  --?! "~SkillName$" -eq "Wisdom" !? Wisdom|save result is [[ ?{Advantage?|Normal,1d20|Advantage,2d20kh1|Disadvantage,2d20kl1} + @{selected|wisdom_save_bonus} ]]
+  --?! "~SkillName$" -eq "Charisma" !? Charisma|save result is [[ ?{Advantage?|Normal,1d20|Advantage,2d20kh1|Disadvantage,2d20kl1} + @{selected|charisma_save_bonus} ]]
+}}
+
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--tokenid|@{selected|token_id}
+--format|davy
+--Jet de sagesse |[[ [$Result] 1d20+@{selected|sag_test}]]
+--name|Voici ce qu'il trouve
+--emote|@{selected|character_name} cherche un livre
+--?? $Result.total <= 7 ?? Resultat|Rien de tres interessant
+--?? $Result.total >= 8 AND $Result.total < 13  ?? Livre|^^ ^^ ~C[[1t[Livres]]]~C ^^ ^^ ~C**[Voir les livres](http://journal.roll20.net/handout/-MDeROK233gabYCPbi-i)**~C^^ ^^
+--?? $Result.total >= 13 AND $Result.total < 17  ?? Livre|^^ ^^ ~C[[1t[Livres]]]~C ^^ ^^ ~C[[1t[Livres]]]~C ^^ ^^ ~C**[Voir les livres](http://journal.roll20.net/handout/-MDeROK233gabYCPbi-i)**~C^^ ^^
+--?? $Result.total > 17?? Livre|^^ ^^ ~C[[1t[Livres]]]~C ^^ ^^ ~C[[1t[Livres]]]~C ^^ ^^ ~C[[1t[Livres]]]~C ^^ ^^~C**[Voir les livres](http://journal.roll20.net/handout/-MDeROK233gabYCPbi-i)**~C^^ ^^
+}}
+
+
+-----------------------------
+
+!power {{ 
+--whisper|GM
+--name|Description attaque réussit
+--[patte](https://s1.1zoom.me/big0/805/354121-sepik.jpg)
+--information| tu [[1t[technique-attaque-reussie]]] et ton attaque [[1t[blessure]]] le/la [[1t[partie-corps]]] dans/avec/il [[1t[effet-blessure]]]
+--!info|~C[description](!&#13;#description-attaque)~C
+}}
+
+-----------------------------
+
+
+!power {{ 
+--whisper|GM
+--name|Description attaque ratée
+--[patte](https://i.pinimg.com/originals/10/5e/9e/105e9ea5f0d2e86bde9e7a365289a9cc.png)
+--information| ton adversaire [[1t[attaque-rate]]] et ton attaque [[1t[attaque-rate-effet]]], il  [[1t[reaction-rate]]]
+--!info|~C[description](!&#13;#description-attaque)~C
+}}
+
+-----------------------------
+
+!power {{ 
+--whisper|GM
+--name|Description magique réussit
+--[patte](https://www.trueachievements.com/achievementimages/5586/204744.jpg)
+--information| tu [[1t[attaque-magique]]] et tu/une/des [[1t[effet-magique]]] et [[1t[magique-mouvement]]]
+--!info|~C[description](!&#13;#description-attaque)~C
+}}
+
+-----------------------------
+
+!power {{ 
+--whisper|GM
+--name|Description magique echec
+--[patte](https://www.trueachievements.com/achievementimages/5586/204744.jpg)
+--information| tu [[1t[attaque-magique]]] et tu/une/des [[1t[effet-magique]]] et [[1t[magique-mouvement]]] mais [[1t[attaque-magique-rate]]]
+--!info|~C[description](!&#13;#description-attaque)~C
+}}
+
+
+-----------------------------
+
+!power {{ 
+--whisper|GM
+--name|Description attaque distance réussi
+--[patte](https://i.pinimg.com/originals/88/77/21/887721f3ac625b8a0dcaffdc9a539218.jpg)
+--information| tu [[1t[attaque-distance]]] et ton attaque [[1t[blessure]]] le/la [[1t[partie-corps]]] dans/avec/il [[1t[effet-blessure]]]
+--!info|~C[description](!&#13;#description-attaque)~C
+}}
+
+-----------------------------
+
+!power {{ 
+--whisper|GM
+--name|Description attaque distance rate
+--[patte](https://i.pinimg.com/originals/88/77/21/887721f3ac625b8a0dcaffdc9a539218.jpg)
+--information| tu [[1t[attaque-distance]]] et ton attaque [[1t[attaque-rate-effet]]], il  [[1t[reaction-rate]]]
+--!info|~C[description](!&#13;#description-attaque)~C
+}}
+
+
+-----------------------------
+
+
+!power {{
+--whisper|GM
+--[patte](https://i.pinimg.com/originals/ef/d3/45/efd345aa8cdf6e06d38224b075e8b57c.jpg)
+--name|Description attaque
+--corps à corps|~C[réussi](!&#13;#attaque-reussi-corps) [echec](!&#13;#attaque-rate-corps)~C 
+--magique|~C[réussi](!&#13;#attaque-magique) [echec](!&#13;#attaque-magique-rate)~C 
+--distance|~C[réussi](!&#13;#attaque-distance-reussit) [echec](!&#13;#attaque-distance-rate)~C 
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--inlinereplace|Bonus|?{Taille de la ville ? |petite|moyenne|grande|tres-grande}
+--hroll|[[ [$Repu] 1d4 ]] 
+--format|davy
+--name|[tresor](https://i.pinimg.com/564x/b4/49/5f/b4495f8bfa4fbdfeda44f34cf84e7ab9.jpg)^^ les marchands
+
+-- |~L[<<](!&#13;#GM-outil)~L
+--?! "~Bonus$" -eq "petite" !? taille de la ville | ~R**Petite**~R
+--?! "~Bonus$" -eq "petite" !?Difficulté de négociation |~R[[1d10+2]]~R
+--?! "~Bonus$" -eq "petite" !?Niveau de vigilance | ~R[[1d10+2]]~R
+--?! "~Bonus$" -eq "petite" !?Niveau d'expertise | ~R[[1d10+2]]~R
+
+--?! "~Bonus$" -eq "moyenne" !? taille de la ville | ~R**Moyenne**~R
+--?! "~Bonus$" -eq "moyenne" !? Difficulté de négociation |~R[[1d10+5]]~R
+--?! "~Bonus$" -eq "moyenne" !? Niveau de vigilance | ~R[[1d10+5]]~R
+--?! "~Bonus$" -eq "moyenne" !? Niveau d'expertise | ~R[[1d10+5]]~R
+
+--?! "~Bonus$" -eq "grande" !? taille de la ville | ~R**Grande**~R 
+--?! "~Bonus$" -eq "grande" !? Difficulté de négociation |~R[[1d10+7]]~R
+--?! "~Bonus$" -eq "grande" !? Niveau de vigilance | ~R[[1d10+7]]~R
+--?! "~Bonus$" -eq "grande" !? Niveau d'expertise | ~R[[1d10+7]]~R
+
+--?! "~Bonus$" -eq "tres-grande" !? taille de la ville | ~R**Trés grande**~R
+--?! "~Bonus$" -eq "tres-grande" !?Difficulté de négociation |~R[[1d10+10]]~R
+--?! "~Bonus$" -eq "tres-grande" !?Niveau de vigilance | ~R[[1d10+10]]~R
+--?! "~Bonus$" -eq "tres-grande" !?Niveau d'expertise | ~R[[1d10+10]]~R
+
+--?? $Repu.total == 1 ?? Qualité de produit | ~R**ordinaire**~R
+--?? $Repu.total == 2 ?? Qualité de produit | ~R**precieux**~R
+--?? $Repu.total == 3 ?? Qualité de produit | ~R**exotique**~R
+--?? $Repu.total == 4 ?? Qualité de produit | ~R**rare**~R
+
+--Tour de negociation |R[[1d4]]~R
+--Description |~R[lancer](!&#13;#description-pnj)~R
+}}
+
+-----------------------------
+
+!power {{
+--inlinereplace|arme|?{Numero de l'arm	}--inlinereplace|tir|@{selected|tir-multiple-niv}
+--format|davy
+--name|[tresor](https://thumbs.gfycat.com/DismalMarriedAustralianfreshwatercrocodile-size_restricted.gif)
+--?! "~tir$" -eq "2" !? !att1| ~C[Faire le tir 1](!&#13;#Attaque ~arme$)~C 
+--?! "~tir$" -eq "2" !? !att2| ~C[Faire le tir 2](!&#13;#Attaque ~arme$)~C
+--?! "~tir$" -eq "3" !? !att3| ~C[Faire le tir 3](!&#13;#Attaque ~arme$)~C
+}}
+
+-----------------------------
+
+
+!power {{
+--whisper|GM
+--name|Lien pour le GM
+--format|davy
+--[magie](https://s3.amazonaws.com/files.d20.io/images/151061590/bcCQZDAO0kRwgm4v4hKM_Q/med.jpg)
+--La boite à outils |~R[Voir](!#GM-outil)~R
+--Musiques|~R[Voir](!#musique)~R
+--Les rencontres |~R[Voir](!#GM-rencontre)~R
+--Tresor |~R[Voir](!#GM-tresor)~R
+--Voyage|~~~
+--Montagne |~R[Voir](!#montage)~R
+--Villa Adora |~R[Voir](!#Entree-villa-adora)~R
+--Le desert |~R[Voir](!#GM-desert)~R
+}}
+
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--[bourse](https://www.on6rm.be/wp-content/uploads/2015/08/vignette_2_bourse-argent.png)
+--name|@{selected|character_name}
+--!platine|[!@{selected|bourse_pp}!] **Platine** ~R[changer](!&#13;#platine)~R
+--!or|[!@{selected|bourse_po}!] **Or** ~R[changer](!&#13;#or)~R
+--!argent|[!@{selected|bourse_pa}!] **Argent** ~R[changer](!&#13;#argent)~R
+--!cuivre|[!@{selected|bourse_pc}!] **Cuivre** ~R[changer](!&#13;#cuivre)~R
+--!recompter|~C[recompter](!&#13;#bourse)~C
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--[magie](https://s3.amazonaws.com/files.d20.io/images/151061590/bcCQZDAO0kRwgm4v4hKM_Q/med.jpg)
+--name|@{selected|character_name}
+--inlinereplace|v-bar1|@{selected|bar1|value}
+--inlinereplace|v-bar2|@{selected|bar2|value}
+--inlinereplace|v-bar3|@{selected|bar3|value}
+--?! "~v-bar1$" -ne "" !? @{selected|bar1|value}|~R[Voir](@{selected|bar1|max})~R
+--?! "~v-bar2$" -ne "" !? @{selected|bar2|value}|~R[Voir](@{selected|bar2|max})~R 
+--?! "~v-bar3$" -ne "" !? @{selected|bar3|value}|~R[Voir](@{selected|bar3|max})~R 
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--inlinereplace|Bonus|?{Taille de la ville ? |petite|moyenne|grande|tres-grande}
+--hroll|[[ [$Repu] 1d4 ]] 
+--format|davy
+--name|[tresor](https://i.pinimg.com/564x/b4/49/5f/b4495f8bfa4fbdfeda44f34cf84e7ab9.jpg)^^ les marchands
+
+-- |~L[<<](!&#13;#GM-outil)~L
+--?! "~Bonus$" -eq "petite" !? taille de la ville | ~R**Petite**~R
+--?! "~Bonus$" -eq "petite" !?Difficulté de négociation |~R[[1d20]]~R
+--?! "~Bonus$" -eq "petite" !?Niveau de vigilance | ~R+[[1d4]]~R
+--?! "~Bonus$" -eq "petite" !?Niveau d'expertise | ~R+[[1d4]]~R
+
+--?! "~Bonus$" -eq "moyenne" !? taille de la ville | ~R**Moyenne**~R
+--?! "~Bonus$" -eq "moyenne" !? Difficulté de négociation |~R[[1d20+2]]~R
+--?! "~Bonus$" -eq "moyenne" !? Niveau de vigilance | ~R+[[1d4+2]]~R
+--?! "~Bonus$" -eq "moyenne" !? Niveau d'expertise | ~R+[[1d4+2]]~R
+
+--?! "~Bonus$" -eq "grande" !? taille de la ville | ~R**Grande**~R 
+--?! "~Bonus$" -eq "grande" !? Difficulté de négociation |~R[[1d20+5]]~R
+--?! "~Bonus$" -eq "grande" !? Niveau de vigilance | ~R+[[1d4+5]]~R
+--?! "~Bonus$" -eq "grande" !? Niveau d'expertise | ~R+[[1d4+5]]~R
+
+--?! "~Bonus$" -eq "tres-grande" !? taille de la ville | ~R**Trés grande**~R
+--?! "~Bonus$" -eq "tres-grande" !?Difficulté de négociation |~R[[1d20+7]]~R
+--?! "~Bonus$" -eq "tres-grande" !?Niveau de vigilance | ~R+[[1d4+7]]~R
+--?! "~Bonus$" -eq "tres-grande" !?Niveau d'expertise | ~R+[[1d4+7]]~R
+
+--?? $Repu.total == 1 ?? Qualité de produit | ~R**ordinaire**~R
+--?? $Repu.total == 2 ?? Qualité de produit | ~R**precieux**~R
+--?? $Repu.total == 3 ?? Qualité de produit | ~R**exotique**~R
+--?? $Repu.total == 4 ?? Qualité de produit | ~R**rare**~R
+
+--Tour de negociation |~R[[1d4]]~R
+--Description |~R[lancer](!&#13;#description-pnj)~R
+--Les achats |~R[lancer](!&#13;#achats)~R
+--Faire un jet |~R[lancer](!&#13;#Jet-neutre)~R
+}}
+
+-----------------------------
+
+!power {{
+--whisper|GM
+--[magie](https://s3.amazonaws.com/files.d20.io/images/151061590/bcCQZDAO0kRwgm4v4hKM_Q/med.jpg)
+--name|Information de la page
+--la liste des notes|~R[Voir](@{selected|bar1})~R
+}}
+
+-----------------------------
+
+
+!power {{
+--[poeme](https://i.servimg.com/u/f39/18/92/21/14/mb_hal10.jpg)
+--!Le poeme| ^^"//Comme au printemps de l’autre année, ^^^^
+Au mois des fleurs, après les froids, ^^^^
+Par quelque belle matinée, ^^^^
+Nous irons encore sous bois.//"^^^^ 
+--Note finale| ~R[[1d90+10]]/100~R
+--Note finale| ~R[[1d90+10]]/100~R
+--!Faire un jet |^^~C[Tenter sa chance](!&#13;#poeme-pj)~C^^
+--soundfx|_audio,play,nomenu|parole-elf-1
+}}
+
+-----------------------------
+	!power {{
+	--name|Concours de poeme
+	--tokenid|@{selected|token_id}
+	--emote|@{selected|character_name}
+	--[image](@{selected|pj-photo})
+	--!Le poeme| ^^"ENNONCE TON POEME A VOIX HAUTE"^^^^ 
+	--Note finale| ~R[[1d70+@{selected|intelligence}+@{selected|charisme}]]/100~R
+	--!Faire un jet |^^~C[Tenter sa chance](!&#13;#poeme-pj)~C^^
+	}}
+	
+-----------------------------
+
+!power {{
+--whisper|self
+--tokenid|@{selected|token_id}
+--format|davy
+--inlinereplace|v1_nom|@{selected|voie1nom}
+--inlinereplace|v1_1|@{selected|voie1-1}
+--inlinereplace|v1_2|@{selected|voie1-2}
+--inlinereplace|v1_3|@{selected|voie1-3}
+--inlinereplace|v1_4|@{selected|voie1-4}
+--inlinereplace|v1_5|@{selected|voie1-5}
+
+--inlinereplace|v2_nom|@{selected|voie2nom}
+--inlinereplace|v2_1|@{selected|voie2-1}
+--inlinereplace|v2_2|@{selected|voie2-2}
+--inlinereplace|v2_3|@{selected|voie2-3}
+--inlinereplace|v2_4|@{selected|voie2-4}
+--inlinereplace|v2_5|@{selected|voie2-5}
+
+--inlinereplace|v3_nom|@{selected|voie3nom}
+--inlinereplace|v3_1|@{selected|voie3-1}
+--inlinereplace|v3_2|@{selected|voie3-2}
+--inlinereplace|v3_3|@{selected|voie3-3}
+--inlinereplace|v3_4|@{selected|voie3-4}
+--inlinereplace|v3_5|@{selected|voie3-5}
+
+--inlinereplace|v4_nom|@{selected|voie4nom}
+--inlinereplace|v4_1|@{selected|voie4-1}
+--inlinereplace|v4_2|@{selected|voie4-2}
+--inlinereplace|v4_3|@{selected|voie4-3}
+--inlinereplace|v4_4|@{selected|voie4-4}
+--inlinereplace|v4_5|@{selected|voie4-5}
+
+--inlinereplace|v5_nom|@{selected|voie5nom}
+--inlinereplace|v5_1|@{selected|voie5-1}
+--inlinereplace|v5_2|@{selected|voie5-2}
+--inlinereplace|v5_3|@{selected|voie5-3}
+--inlinereplace|v5_4|@{selected|voie5-4}
+--inlinereplace|v5_5|@{selected|voie5-5}
+
+--inlinereplace|v6_nom|@{selected|voie6nom}
+--inlinereplace|v6_1|@{selected|voie6-1}
+--inlinereplace|v6_2|@{selected|voie6-2}
+--inlinereplace|v6_3|@{selected|voie6-3}
+--inlinereplace|v6_4|@{selected|voie6-4}
+--inlinereplace|v6_5|@{selected|voie6-5}
+
+--?! "~v1_1$" -ne "" !? !voie_1|**@{selected|voie1nom}**
+--?! "~v1_1$" -ne "" !? !v1.1|@{selected|voie1-1}~~~
+--?! "~v1_2$" -ne "" !? !v2.2|@{selected|voie1-2}~~~
+--?! "~v1_3$" -ne "" !? !v3.3|@{selected|voie1-3}~~~
+--?! "~v1_4$" -ne "" !? !v4.4|@{selected|voie1-4}~~~
+--?! "~v1_5$" -ne "" !? !v5.5|@{selected|voie1-5}~~~
+
+--?! "~v2_1$" -ne "" !? !voie_2|**@{selected|voie2nom}**
+--?! "~v2_1$" -ne "" !? !v1.2|@{selected|voie2-1}~~~
+--?! "~v2_2$" -ne "" !? !v2.2|@{selected|voie2-2}~~~
+--?! "~v2_3$" -ne "" !? !v3.2|@{selected|voie2-3}~~~
+--?! "~v2_4$" -ne "" !? !v4.2|@{selected|voie2-4}~~~
+--?! "~v2_5$" -ne "" !? !v5.2|@{selected|voie2-5}~~~
+
+--?! "~v3_1$" -ne "" !? !voie_3|**@{selected|voie3nom}**
+--?! "~v3_1$" -ne "" !? !v1.3|@{selected|voie3-1}~~~
+--?! "~v3_2$" -ne "" !? !v2.3|@{selected|voie3-2}~~~
+--?! "~v3_3$" -ne "" !? !v3.3|@{selected|voie3-3}~~~
+--?! "~v3_4$" -ne "" !? !v4.3|@{selected|voie3-4}~~~
+--?! "~v3_5$" -ne "" !? !v5.3|@{selected|voie3-5}~~~
+
+--?! "~v4_1$" -ne "" !? !voie_4|**@{selected|voie4nom}**
+--?! "~v4_1$" -ne "" !? !v1.4|@{selected|voie4-1}~~~
+--?! "~v4_2$" -ne "" !? !v2.4|@{selected|voie4-2}~~~
+--?! "~v4_3$" -ne "" !? !v3.4|@{selected|voie4-3}~~~
+--?! "~v4_4$" -ne "" !? !v4.4|@{selected|voie4-4}~~~
+--?! "~v4_5$" -ne "" !? !v5.4|@{selected|voie4-5}~~~
+
+--?! "~v5_1$" -ne "" !? !voie_5|**@{selected|voie5nom}**
+--?! "~v5_1$" -ne "" !? !v1.5|@{selected|voie5-1}~~~
+--?! "~v5_2$" -ne "" !? !v2.5|@{selected|voie5-2}~~~
+--?! "~v5_3$" -ne "" !? !v3.5|@{selected|voie5-3}~~~
+--?! "~v5_4$" -ne "" !? !v4.5|@{selected|voie5-4}~~~
+--?! "~v5_5$" -ne "" !? !v5.5|@{selected|voie5-5}~~~
+
+--?! "~v6_1$" -ne "" !? !voie_6|**@{selected|voie6nom}**
+--?! "~v6_1$" -ne "" !? !v1.6|@{selected|voie6-1}~~~
+--?! "~v6_2$" -ne "" !? !v2.6|@{selected|voie6-2}~~~
+--?! "~v6_3$" -ne "" !? !v3.6|@{selected|voie6-3}~~~
+--?! "~v6_4$" -ne "" !? !v4.6|@{selected|voie6-4}~~~
+--?! "~v6_5$" -ne "" !? !v5.6|@{selected|voie6-5}~~~
+
+}}
+
+!power {{
+--whisper|GM
+--name | Feu dans le village
+--~C[MJ](https://phoneky.co.uk/thumbs/screensavers/down/misc/fireinhous_rcaf2k9h.gif)~C
+--hroll|[[ [$habitantf] @{selected|Habitant_MJ}-1d10]] 
+--!information| des feus s'allument partout dans le village, malgré les efforts des habitants, il y a des morts et des habitations détruites
+--habitants blessés ou morts | [![^habitantf]!]/ 100
+--!lancer3| ~C[Mettre à jour](!&#13;!cof-set-attribute Habitant [^habitantf])~C
+--!Lancer5|~C[Incendie](!&#13;#incendie-pj)~C
+--!lancer4| ~C[![LANCER LE TIMER](https://webhorloge.fr/minuteur/#countdown=00:20:00&title=Minuteur&sound=twinkle&loop=0)!]~C
+}}
+
+-----------------------------
+
+!power {{
+--name | Feu dans le village
+--~C[MJ](https://phoneky.co.uk/thumbs/screensavers/down/misc/fireinhous_rcaf2k9h.gif)~C
+--!information| des feus s'allument partout dans le village, malgré les efforts des habitants, il y a des morts et des habitations détruites
+--habitants blessés ou morts | [!@{selected|Habitant_MJ}/100!]
+}}
+
+
+-----------------------------
+
+!power {{
+--whisper|self
+--name|Fiche du personnage
+--@{selected|character_name}|[image](@{selected|image})
+--Fiche personnage |~R[Voir](http://journal.roll20.net/character/@{selected|character_id})~R
+--Les voies |~R[Voir](!&#13;#voies)~R
+--Statut|~R[Voir](!&#13;#5-🚩-Statut)~R
+}}
+
+
+-----------------------------
+
++1d20r<5
+!power {{
+--name|Bultin de note
+--inlinereplace|moy|[[(@{selected|for}+1d20r<5+@{selected|dex}+1d20r<5+@{selected|int}+1d20r<5+@{selected|sag}+1d20r<5+@{selected|con}+1d20r<5+@{selected|cha}+1d20r<5)/6]]
+--!Fiche personnage |~R[Voir](https://www.silverspringchurchofchrist.org/wp-content/uploads/2019/09/bulletins_icon_2019.png)~R
+--Moyenne|~moy$
+}}
+
+ -----------------------------
+
+!power {{
+--emote|@{target|character_name}
+--whisper|gm,@{target|character_name}
+--[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
+--inlinereplace|typ|?{Faire un jet de |Charisme,CHA |Constitution,CON|Dextérité,DEX|Force,FOR|Intelligence,INT|Sagesse,SAG}
+--inlinereplace|diff|?{Diffculté (vide pour secret)?}
+--inlinereplace|bonus|?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--name | @{target|character_name}  ~~~  Le Mj te demande un test
+--Cible|[!@{target|character_name}!]
+--Type | [!~typ$!]
+--?! "~diff$" -eq "" !? Difficulté | [!secret!]
+--?! "~diff$" -ne "" !? Difficulté | [!~diff$!]
+--Bonus/malus | [!~bonus$!]
+--!lancer2| ~C[Lancer le dé (automatique)](!&#13;!cof-jet ~typ$  ~diff$  &#45;&#45;bonus ~bonus$ &#45;&#45;target @{target|token_id})~C
+--!lancer3| ~C[Utiliser une compétence](!&#13;!cof-jet &#45;&#45;target @{target|token_id})~C
+}}
+
+
+-----------------------------
+
+!power {{
+--emote|@{target|character_name}
+--whisper|gm,@{target|character_name}
+--[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
+--inlinereplace|typ|?{Faire un jet de |Charisme,CHA |Constitution,CON|Dextérité,DEX|Force,FOR|Intelligence,INT|Sagesse,SAG}
+--inlinereplace|diff|?{Diffculté (vide pour secret)?}
+--inlinereplace|bonus|?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--name | @{target|character_name}  ~~~  Le Mj te demande un test
+--Cible|[!@{target|character_name}!]
+--Type | [!~typ$!]
+--?! "~diff$" -eq "" !? Difficulté | [!secret!]
+--?! "~diff$" -ne "" !? Difficulté | [!~diff$!]
+--Bonus/malus | [!~bonus$!]
+--!lancer2| ~C[Lancer le dé (automatique)](!&#13;!cof-jet ~typ$  ~diff$  &#45;&#45;bonus ~bonus$ &#45;&#45;target @{target|token_id})~C
+--!lancer3| ~C[Utiliser une compétence](!&#13;!cof-jet &#45;&#45;target @{target|token_id})~C
+}}
+
+-----------------------------
+
+!power {{
+--[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
+--inlinereplace|typ|?{Faire un jet de |Charisme,CHA |Constitution,CON|Dextérité,DEX|Force,FOR|Intelligence,INT|Sagesse,SAG}
+--inlinereplace|diff|?{Diffculté (vide pour secret)?}
+--inlinereplace|bonus|?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5}
+--name | Tout le monde ~~~  Le Mj vous demande un test
+--Cible| [!Tout le monde!]
+--Type | [!~typ$!]
+--?! "~diff$" -eq "" !? Difficulté | [!secret!]
+--?! "~diff$" -ne "" !? Difficulté | [!~diff$!]
+--Bonus/malus | [!~bonus$!]
+--!lancer2| ~C[Lancer le dé (séléctionne ton token)](!&#13;!cof-jet ~typ$  ~diff$  &#45;&#45;bonus ~bonus$ )~C
+--!lancer3| ~C[Utiliser une compétence](!&#13;!cof-jet)~C
+}}
+
+
+-----------------------------
+
+!power {{
+--[MJ](https://www.mtgnexus.com/img/gallery/3516-rhystic-study.jpg)
+--name | Test de Fulgurance magique
+--inlinereplace|typ|?{niveau du sort ?|niv1,INT 11 |niv2,INT 12|niv3,INT 13|niv4,INT 14|niv5,INT 15]]} 
+--?! "~typ$" -eq "INT 11" !? Degat Si echec critique | [!1d4!]
+--?! "~typ$" -eq "INT 12" !? Degat Si echec critique | [!2d4!]
+--?! "~typ$" -eq "INT 13" !? Degat Si echec critique | [!3d4!]
+--?! "~typ$" -eq "INT 14" !? Degat Si echec critique | [!4d4!]
+--?! "~typ$" -eq "INT 15" !? Degat Si echec critique | [!5d4!]
+--api_cof-jet| ~typ$ _target @{selected|token_id}
+}}
+
+-----------------------------
+
+!power {{
+--whisper|self
+--[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
+--name | Gestion des testes
+--!ligne1|~C[test pour une cible](!&#13;#demande-test-cible)~C
+--!ligne2|~C[test pour un groupe](!&#13;#demande-test-groupe)~C
+}}
+
+-----------------------------
+
+
+!power {{
+--whisper|self
+--[MJ](https://miarkaimagination.files.wordpress.com/2014/02/dangers-of-obe.jpg)
+--!MJ| ~C[!Faire un jet contre la mort!]  ~C
+--!information|A chaque tour le joueur fait un teste contre la mort CON 10. 3 échec c'est la mort definitive, 3 réussite le PJ repasse à 1. un jet de medecine diff INT 10 est possible pour stabiliser le PJ
+--!lancer2| ~C[demander un test](!&#13;#jet-mort)~C
+--!lancer3| ~C[echec](!&#13;#red-1) [reussite](!&#13;#bleu-1)~C
+--!lancer4| ~C[soin 1](!&#13;!cof-soin 1)~C
+--!info| ~C // Ne pas oublier de séléctionner son token// ~C
+}}
+
+
+-----------------------------
+
+!power {{
+--name|@{selected|character_name}
+--[MJ](https://miarkaimagination.files.wordpress.com/2014/02/dangers-of-obe.jpg)
+--!MJ| ~C[!Faire un jet contre la mort!]  ~C
+--!lancer2| ~C[Automatique](!&#13;!cof-jet CON 10)~C
+--!info| ~C // Ne pas oublier de séléctionner son token// ~C
+}}
+
+
+-----------------------------
+
+!power {{
+--whisper|self
+--name|Fiche du personnage
+--@{selected|character_name}|[image](@{selected|image})
+--Fiche personnage |~R[Voir](http://journal.roll20.net/character/@{selected|character_id})~R
+--Les voies |~R[Voir](!#voies)~R
+--Statut|~R[Voir](!#Statut)~R
+}}
+
 !power {{
 --[MJ](https://i.pinimg.com/originals/f9/81/50/f98150972f73694bc4835a0d142544f9.gif)
 --name|Les Notes de tenefir :  premier temple
