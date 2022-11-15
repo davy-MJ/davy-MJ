@@ -1,3 +1,25 @@
+!power {{
+--[MJ](https://i.pinimg.com/originals/f9/81/50/f98150972f73694bc4835a0d142544f9.gif)
+--name|Les Notes de tenefir :  premier temple
+--3eme ch. | **[La chute du monolithe](http://journal.roll20.net/handout/-MVWb7_F5eVdYfqBfLCd)**
+--2eme ch.| **[En terre Mestrefeu](http://journal.roll20.net/handout/-MVWb7_F5eVdYfqBfLCd)**
+--1er ch. | **[En route pour RinceSabot](http://journal.roll20.net/handout/-MRzQ1m5osTc_JXhaglB)**
+--!!replay|Retrouvez le replay des dernieres parties sur la **chaine davy_mj sur youtube**
+}}
+
+
+!power {{
+--[MJ](https://thumbs.dreamstime.com/b/young-man-looking-behind-corner-brick-wall-cartoon-vector-illustration-white-background-146747895.jpg)
+--!MJ| ~C[!Gestion des PJ/PNJ à couvert!]  ~C
+--!info|tant que le pj/pnj reste derriére sa couverture, il peut faire un action simple ou L. si il se déplace il perd sa couverture
+--!lancer2| ~C[n'est plus à couvert](!&#13;!cof-bonus-couvert)~C
+--!lancer3| ~C[légérement à couvert (+1 DEF)](!&#13;!cof-bonus-couvert 1)~C
+--!lancer4| ~C[à couvert (+2 DEF)](!&#13;!cof-bonus-couvert 2)~C
+--!lancer5| ~C[totalement à couvert (+3 DEF)](!&#13;!cof-bonus-couvert 3)~C
+--Mettre Marker pour le signaler (marron) | ~C[oui](!&#13;#marker-couvert) [non](!&#13;#marker-couvert-off)~C
+}}
+
+
 !power {{	
 --name|zone glacial
 --!img|[img](https://static.wikia.nocookie.net/omniverse-fanon/images/d/dd/Tumblr_static_tumblr_static_9tk03t0wawco40kc8w4kooogs_640.gif)
