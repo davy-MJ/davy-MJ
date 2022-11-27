@@ -1,4 +1,38 @@
 !power {{
+--txcolor|#FFFFFF
+--bgcolor|#000000
+--erowbg|#000000
+--erowtx|#FFFFFF
+--orowbg|#000000
+--orowtx|#FFFFFF
+--emote|@{selected|character_name}
+--name |Tour  
+--tokenid|@{selected|token_id}
+--whisper|self
+--inlinereplace|esante|@{selected|sante}
+--inlinereplace|sbire|@{selected|type} 
+--!test|[TTB width="100%" style="background-image:url(https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg)"	]
+[TRB]
+[TDB style="text-align: center;padding:5px;color:white;font-size:20px;text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;"] **@{selected|character_name}** [TDE]
+[TRE]
+[TTE]
+--?! "~esante$" -eq "hébeté" -and "~sbire$" -ne "sbire"!? !information etat | #Hébeté
+--?! "~esante$" -eq "chancelant" -and "~sbire$" -ne "sbire" !? !information etat | #chancelant
+--?! "~esante$" -eq "neutralisé" -and "~sbire$" -ne "sbire" !? !information etat | #neutralisé
+--votre situation| c'est votre tour, voici la liste de vos action
+--!lancer3| ~C[🥊 attaque](!&#13;#attack)~C
+--!lancer| ~C[💢 désarmer](!&#13;#desarmer)~C
+--!lancer7| ~C[🤼 empoigner](!&#13;#empoigner)~C
+--!lancer5| ~C[✋ aider](!&#13;#aider)~C
+--!lancer8| ~C[❤️ recuperation](!&#13;#action-recuperation)~C
+--!lancer9| ~C[🤼 Se liberer](!&#13;#se-liberer)~C
+--!lancer6| ~C[⚔️ Test en opposition](!&#13;#opposition)~C
+--!lancer10| ~C[💥 Détruire un objet](!&#13;#detruire-objet)~C
+--!lancer11| ~C[🙌 Renverser](!&#13;#renverser)~C
+--!lancer12| ~C[💨 Collision](!&#13;#collision)~C
+}}
+
+!power {{
 --emote|@{target|character_name}
 --whisper|gm,@{target|character_name}
 --[MJ](https://www.nicepng.com/png/detail/48-485421_dice-png-transparent-transparent-background-dice-png.png)
