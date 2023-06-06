@@ -1,0 +1,1178 @@
+        var var_attacker;
+        var var_target;
+        var var_attackName;
+        var var_attackBonusMalus;
+        var var_attackType;
+        var var_attackDamage;
+        var var_attackCritic;
+        var var_attackdirect;
+        var var_critDamage;
+        var var_info;
+        var var_AOE;
+        var var_attackaction;
+        var var_effect1;
+        var var_effect2;
+        var var_effect3;
+        var var_effect4;
+        var var_tokenid;
+        var var_attackerAttr;
+        var var_targetAttr;
+        var targetObj;
+        var var_tokenid;
+        var type_defenseur;
+        var etat_attaquant;
+        var sante_attaquant;
+        var affliction_attaquant;
+        var etat_defenseur;
+        var sante_defenseur;
+        var affliction_defenseur;
+        var var_attackerTokenID;
+		var name_attacker;
+		var name_defenser;
+		var var_etat;
+		var var_sante;
+		var var_afflication;
+		var rollresult;
+		var diceResult;
+		var diceResult;
+		var DegEchec;
+		var CritBonus=0;
+		var var_attackerAttr;
+		var var_targetAttr;
+		var var_diff;
+		var var_attackmaster;
+		var var_affliction_type;
+		var var_aoe;
+		var var_aoe_type;
+		var parts;
+		var msg;
+		var niv_effect;
+		var var_name_affliction;
+		var var_name_sante;
+		var var_name_etat;
+		let TokenSbireaffliction = [[]];
+		let Tableaffliction = [[]];
+		var characterID;
+		var img_defenser;
+		var bar2_value;
+		var var_attackerAttr;
+		var var_targetAttr;
+		var var_attackmaster;
+		var var_attackchar;
+		
+   /*---------------------------Appel attack---------------------------------*/
+		
+on("chat:message", function (msg) {
+    if (msg.type == "api" && msg.content.indexOf("!mm3_attack") !== -1) {
+        
+        var parts = msg.content.split(" ");
+        
+       parseOption(parts);
+      
+       var tokenPossibles = findObjs({
+            _type: "graphic",
+            _id: var_tokenid
+        });
+
+        var tokenPossibles_attack = findObjs({
+            _type: "graphic",
+            _id: var_attackerTokenID
+        });
+
+        if (tokenPossibles.length > 0) {
+            targetObj = tokenPossibles[0];
+        }
+
+        if (tokenPossibles_attack.length > 0) {
+            selectedObj = tokenPossibles_attack[0];
+            name_attacker = selectedObj.get("name");
+        }
+        else
+        {
+            name_attacker ="attaquant"
+        }
+
+        
+        name_defenser = targetObj.get("name");
+        type_defenseur = getAttrByName(var_target, "type");
+        //etat_attaquant = getAttrByName(var_attacker, "etat");
+        //sante_attaquant = getAttrByName(var_attacker, "sante");
+        //affliction_attaquant = getAttrByName(var_attacker, "affliction");
+        
+        etat_defenseur = getAttrByName(var_target, "etat");
+        sante_defenseur  = getAttrByName(var_target, "sante");
+        affliction_defenseur  = getAttrByName(var_target, "affliction");
+        
+       log("var attaque="+var_attackchar);
+        if (var_attackType == "contact") {
+            if(!var_attackchar)
+            {
+            var_attackerAttr = getAttrByName(var_attacker, "contact");
+            }
+            else
+            {
+              var_attackerAttr=var_attackchar;
+            }
+            var_targetAttr = getAttrByName(var_target, "parry");
+            log("attaque contact"+var_attackerAttr);
+            attackContactDistanceSend();
+        }
+        if (var_attackType == "distance") {
+            
+            if(!var_attackchar)
+            {
+            var_attackerAttr = getAttrByName(var_attacker, "distance");
+            }
+            else
+            {
+              var_attackerAttr=var_attackchar;
+            }
+            
+            var_targetAttr = getAttrByName(var_target, "dodge");
+            log("attaque distance");
+            attackContactDistanceSend();
+        }
+   
+
+
+
+
+
+
+    }
+
+ 
+});
+
+    /*--------------------------attack contact distance -----------------------------------*/
+    
+    function attackContactDistanceSend() {
+        //log("nom="+name_attacker);
+        
+        var var_attackResult = attackContactDistanceRoll();
+        var touche = var_attackResult[0][1];
+        var resultText="";
+        NameAttack="Attaque"
+        imgAttack="https://i.pinimg.com/564x/b8/cf/4d/b8cf4d1899635a69e1e1d092b929b11a.jpg";
+        TableActionButton=""
+        
+        log(var_attackaction);
+        if(var_attackaction =="desarmer")
+        {
+            imgAttack="https://static.tvtropes.org/pmwiki/pub/images/destroy_gun.png";
+              NameAttack="Desarmé"
+        }
+        
+         if(var_attackaction =="empoigner")
+        {
+            imgAttack="https://i0.wp.com/www.heyuguys.com/images/2014/09/Black-Adam-1.jpg";
+              NameAttack="Empoigner"
+        }
+  
+        if (touche == "attaquant") {
+            var bkgColor="green";
+            resultText="l'attaque réussi";
+            if(var_attackaction)
+            {
+              
+              if(var_attackaction =="desarmer")
+              {
+              
+              resultText="la cible est désarmée"  
+              
+              sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|fist");
+              }
+              
+               if(var_attackaction =="empoigner")
+              {
+              
+              resultText="la cible est empoignée"  
+               var_attackerChar = getAttrByName(var_attacker, "strength");
+              DiceStrenghAttacker=(Math.floor(Math.random() * 20) + 1)+parseInt(var_attackerChar);
+              
+              log("force="+var_attackerChar);
+              log("total de"+DiceStrenghAttacker);
+              
+              TableActionButton="<tr style='height: 0px;'> <td style='width: 100%; height: 0px; padding: 10px; font-weight: bold;'>[test de force de la cible](!mm3_test --AttackType force --Diff "+DiceStrenghAttacker+" --effect1 entravé --effect2 entravé --effect3 entravé --effect4 entravé)</td> </tr>"
+              }
+              
+              
+            }
+            else
+            {
+                resultText="l'attaque réussi";
+            }
+           
+		} else {
+		    
+		    var bkgColor="red";
+            if(var_attackaction)
+            {
+            if(var_attackaction =="desarmer")
+            {
+              resultText="la cible garde son arme"  
+            }
+              if(var_attackaction =="desarmer")
+            {
+              resultText="la cible se libere"  
+            }
+            }
+            else
+            {
+                resultText="l'attaque rate";
+            }
+      
+	   }
+	   
+	   
+	    Tabletop="<table border='1' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody>";
+        Tableheader="<tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'>"+NameAttack+"</td> </tr> ";
+        TableImg="<tr style='height: 103px;'> <td style='width: 100%; height: 103px;'><img src='"+imgAttack+"' style='object-fit: cover; object-position: 100% 20%;' height='100px' /></td> </tr> ";
+	    TableNames="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>" + name_attacker + "<img src='https://s3.amazonaws.com/files.d20.io/images/311329923/4Zrr6jR_ke3Z5wvHBkrGsA/max.png' alt='' width='50' style='vertical-align: middle;' />"+name_defenser+"</td> </tr>";
+        TableNameAttack="<tr style='height: 18px;'> <td style='width: 100%; height: 18px;'>"+ name_attacker + " attaque avec <strong>" + var_attackName + "</strong></td> </tr>";
+        TableDice="<tr style='height: 18px;'> <td style='width: 100%; height: 18px; font-size: 20px; padding: 10px;'><img src='https://cdn-icons-png.flaticon.com/512/7057/7057717.png' style='vertical-align: middle;' width='20' height='20' alt='' /><strong style='background-color: blue;'>" + var_attackResult[0][0] + "</strong> + " + var_attackResult[0][6] + " + (" + var_attackBonusMalus + ") </td> </tr>";
+		TableResult="<tr style='height: 18px;'> <td style='width: 100%; height: 18px;'> <div style='width: 30%; padding: 5px; margin: auto; background-color: "+bkgColor+"; font-size: 20px;'>" + var_attackResult[0][2] + "</div> </td> </tr>";
+		TableTextResult="<tr style='height: 0px;'> <td style='width: 100%; height: 0px; padding: 10px; font-weight: bold;'>"+resultText+"</td> </tr>"
+		TableBottom="</tbody> </table>";
+		sendChat("",Tabletop+Tableheader+TableImg+TableNames+TableNameAttack+TableDice+TableResult+TableTextResult+TableActionButton+TableBottom);
+		
+	    //sendChat("", "<table border='1' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody> <tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'>Attaque</td> </tr> <tr style='height: 103px;'> <td style='width: 100%; height: 103px;'><img src='https://cdn1-www.superherohype.com/assets/uploads/2019/02/captain-america-vs-iron-man-civil-war-1-609x360.jpg' style=';object-fit: cover; object-position: 100% 20%;' height='100' width='100%' /></td> </tr> <tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>" + name_attacker + "<img src='https://s3.amazonaws.com/files.d20.io/images/311329923/4Zrr6jR_ke3Z5wvHBkrGsA/max.png' alt='' width='50' style='vertical-align: middle;' />"+name_defenser+"</td> </tr> <tr style='height: 18px;'> <td style='width: 100%; height: 18px;'>"+ name_attacker + " attaque avec <strong>" + var_attackName + "</strong></td> </tr> <tr style='height: 18px;'> <td style='width: 100%; height: 18px;'>Arme de type : <strong>" + var_attackType + "</strong></td> </tr> <tr style='height: 18px;'> <td style='width: 100%; height: 18px; font-size: 20px; padding: 10px;'><img src='https://cdn-icons-png.flaticon.com/512/7057/7057717.png' style='vertical-align: middle;' width='20' height='20' alt='' /><strong style='background-color: blue;'>" + var_attackResult[0][0] + "</strong> + " + var_attackResult[0][6] + " + (" + var_attackBonusMalus + ") </td> </tr> <tr style='height: 18px;'> <td style='width: 100%; height: 18px;'> <div style='width: 30%; padding: 5px; margin: auto; background-color: "+bkgColor+"; font-size: 20px;'>" + var_attackResult[0][2] + "</div> </td> </tr> <tr style='height: 0px;'> <td style='width: 100%; height: 0px; padding: 10px; font-weight: bold;'>"+resultText+"</td> </tr> </tbody> </table>");
+		
+		
+		
+		
+		
+		sendChat("","/w gm attaquant "+var_attackResult[0][2]+" vs "+var_attackResult[0][3]+ " defenseur");
+	 
+        if (touche == "attaquant" && (var_attackType == "contact" || var_attackType == "distance") ) {
+            let var_TestRobustesseResult = AttackTestRobustesse();
+           
+            if (var_TestRobustesseResult[0][1]=="le test est reussi")
+            {
+                var bkgColor="green";
+                var lineDeg="";
+                log("green");
+            }
+            else{
+                var bkgColor="red";
+                 log("red");
+                 if(type_defenseur!="sbire"){
+                 var lineDeg="<tr style='height: 0px;'> <td style='width: 100%; height: 0px; padding: 10px; font-weight: bold;'>degrée :"+ var_TestRobustesseResult[0][3]+" / "+var_TestRobustesseResult[0][5]+" </td> </tr> ";
+                 }
+                 else{
+                    var lineDeg=""; 
+                 }
+            
+			sendChat("", "<table border='1' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody> <tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'>Test robustesse</td> </tr> <tr style='height: 103px;'> <td style='width: 100%; height: 103px;'><img src='https://static1.cbrimages.com/wordpress/wp-content/uploads/2017/07/15-Bloodiest-Fist-Fights-in-Comic-Book-History.jpg' style=';object-fit: cover; object-position: 100% 20%;' height='100' width='100%' /></td> </tr> <tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>"+name_defenser+"</td> </tr> <tr style='height: 18px;'> <td style='width: 100%; height: 18px; font-size: 20px; padding: 10px;'><img src='https://cdn-icons-png.flaticon.com/512/7057/7057717.png' style='vertical-align: middle;' width='20' height='20' alt='' /><strong style='background-color: blue;'>" + var_TestRobustesseResult[0][0] + "</strong> + " + var_TestRobustesseResult[0][4] + "</td> </tr> <tr style='height: 18px;'> <td style='width: 100%; height: 18px;'> <div style='width: 60%; padding: 5px; margin: auto; background-color: "+bkgColor+"; font-size: 20px;'>" + var_TestRobustesseResult[0][1] + "</div> </td> </tr> "+lineDeg+"</tbody> </table>");
+			sendChat("","/w gm attaquant damage "+var_attackDamage+" vs "+var_TestRobustesseResult[0][2]+ " defenseur");
+	   }
+	   }
+    }
+    
+    /************************************************************************************************/
+    
+    
+    /*--------------------------Appel attack de zone ----------------------------------*/
+on("chat:message", function(msg) {
+  if (msg.type == "api" && msg.content.indexOf("!mm3_attackRobustesse") !== -1) {
+
+  }
+});
+    
+    /*---------------------------Resultat attack Contact Distance ----------------------------------*/
+    
+    function attackContactDistanceRoll() {
+        
+        log(var_attackerAttr);
+        log(var_targetAttr);
+        
+        var diceResult = Math.floor(Math.random() * 20) + 1;
+        if(diceResult>parseInt(var_attackcritic))
+        {
+            var_attackDamage=parseInt(var_attackDamage)+5;
+            log("attaque critique");
+        }
+        
+        if(var_attackmaster){
+            var var_attackmastervalue=var_attackmaster;
+            var attackerRoll = parseInt(var_attackmaster) + diceResult + parseInt(var_attackBonusMalus);
+        }
+        else
+        {
+        var var_attackmastervalue=parseInt(var_attackerAttr);
+        var attackerRoll = parseInt(var_attackerAttr) + diceResult + parseInt(var_attackBonusMalus);
+        }
+       
+        var targetRoll = parseInt(var_targetAttr) + 10;
+        var reussite = "";
+        var echec = "";
+        let attackResponse = [[]];
+        if (attackerRoll >= targetRoll) {
+            attackResponse[0][0] = diceResult;
+            attackResponse[0][1] = "attaquant";
+            attackResponse[0][2] = attackerRoll;
+            attackResponse[0][3] = targetRoll;
+            attackResponse[0][4] = reussite;
+            attackResponse[0][5] = var_attackBonusMalus;
+            attackResponse[0][6] = var_attackmastervalue
+            return attackResponse;
+        } else {
+            attackResponse[0][0] = diceResult;
+            attackResponse[0][1] = "defenseur";
+            attackResponse[0][2] = attackerRoll;
+            attackResponse[0][3] = targetRoll;
+            attackResponse[0][4] = echec;
+            attackResponse[0][5] = var_attackBonusMalus;
+            attackResponse[0][6] = var_attackmastervalue
+            return attackResponse;
+        }
+        
+    }
+    
+
+
+/*-------------------------Test de Robustesse suite à une attack --------------------------------*/
+   function AttackTestRobustesse() {
+
+        let diceResult_t = Math.floor(Math.random() * 20) + 1;
+        var var_targettoughness = getAttrByName(var_target, "toughness");
+        
+        log("type defenseur :"+type_defenseur);
+        
+        if(type_defenseur!="sbire")
+        {
+        bar3_value = targetObj.get("bar3_value");
+        var defensetoughness = diceResult_t + parseInt(var_targettoughness) - parseInt(bar3_value);
+        }
+        else{
+        var defensetoughness = diceResult_t + parseInt(var_targettoughness)
+        }
+        var attackdammagevalue = parseInt(var_attackDamage) ;
+        
+        var Caldegree = defensetoughness - attackdammagevalue;
+        let testtouchnessResponse = [[]];
+        
+        
+        
+        if(type_defenseur=="sbire" && Caldegree <0 )
+        {
+            sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|dead");
+            removeTokenTurn(var_tokenid);
+        }
+        
+        if (Caldegree < 0 && Caldegree >= -5 && type_defenseur!="sbire") {
+            DegEchec = "1";
+            log("DegEchec|1");
+            sante_defenseur = gestion_sante();
+        }
+        if (Caldegree < -5 && Caldegree >= -10 && type_defenseur!="sbire") {
+            DegEchec = "2";
+            log("DegEchec|2");
+            sante_defenseur = gestion_sante();
+        }
+        if (Caldegree < -10 && Caldegree >= -15 && type_defenseur!="sbire") {
+            DegEchec = "3";
+            log("DegEchec|3");
+            sante_defenseur = gestion_sante();
+        }
+        if (Caldegree < -15 && type_defenseur!="sbire") {
+            DegEchec = "4";
+             log("DegEchec|4");
+            sante_defenseur = gestion_sante();
+        }
+		
+        if (defensetoughness >= attackdammagevalue) {
+            testtouchnessResponse[0][0] = diceResult_t;
+            testtouchnessResponse[0][1] = "le test est reussi";
+            testtouchnessResponse[0][2] = defensetoughness;
+			testtouchnessResponse[0][3] = "0";
+			testtouchnessResponse[0][4] = var_targettoughness;
+			testtouchnessResponse[0][5] = sante_defenseur;
+            return testtouchnessResponse;
+        } else {
+              if(type_defenseur!="sbire")
+        {
+            bar3_value = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) + 1);
+        }
+            testtouchnessResponse[0][0] = diceResult_t;
+            testtouchnessResponse[0][1] = "le test est un echec";
+            testtouchnessResponse[0][2] = defensetoughness;
+            testtouchnessResponse[0][3] = DegEchec;
+			testtouchnessResponse[0][4] = var_targettoughness;
+			testtouchnessResponse[0][5] = sante_defenseur;
+            return testtouchnessResponse;
+        }
+    }
+
+/*---------------------------Test de characteristique ---------------------------------*/
+    
+    function  TestCharSend(type) {
+       
+     
+            let var_TestResult = CharTest(type);
+            var TablelineDeg="";
+            var imgChar="";
+            
+            if(type="volonte")
+            {
+                imgChar="https://imgsrv.roll20.net/?src=https%3A//static.wikia.nocookie.net/starcraft/images/6/68/ElmsHogarthMarine_SC-ShadowWars_Comic1.jpg";
+            }
+            if(type="esquive")
+            {
+                imgChar="https://i.kym-cdn.com/photos/images/newsfeed/001/283/752/cf9.png";
+            }
+           
+            if(type="vigueur")
+            {
+                imgChar="https://i.pinimg.com/564x/38/1e/a2/381ea206b9da931987730bf747490e7f.jpg";
+            }
+            if (var_TestResult[0][1]=="le test est reussi")
+            {
+                var bkgColor="green";
+                var lineDeg="";
+                log("green");
+            }
+            else{
+                var bkgColor="red";
+                 log("red");
+                 log("type def:"+type_defenseur);
+                 TablelineDeg="<tr style='height: 0px;'> <td style='width: 100%; height: 0px; padding: 10px; font-weight: bold;'>degrée :"+ var_TestResult[0][3]+" / "+var_TestResult[0][5]+" </td> </tr> ";
+            }
+            
+        Tabletop="<table border='1' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody>";
+        Tableheader="<tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'> Test "+var_attackType+"</td> </tr> ";
+        TableImg="<tr style='height: 103px;'> <td style='width: 100%; height: 103px;'><img src='"+imgChar+"' style='object-fit: cover; object-position: 100% 20%;' height='100' width='100%' /></td> </tr> ";
+        TableNameTarget="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>"+name_defenser+"</td> </tr>";
+        TableDice="<tr style='height: 18px;'> <td style='width: 100%; height: 18px; font-size: 20px; padding: 10px;'><img src='https://cdn-icons-png.flaticon.com/512/7057/7057717.png' style='vertical-align: middle;' width='20' height='20' alt='' /><strong style='background-color: blue;'>" + var_TestResult[0][0] + "</strong> + " + var_TestResult[0][4] + " </td> </tr>";
+		TableResult="<tr style='height: 18px;'> <td style='width: 100%; height: 18px;'> <div style='width: 60%; padding: 5px; margin: auto; background-color: "+bkgColor+"; font-size: 20px;'>" + var_TestResult[0][1] + "</div> </td> </tr>";
+		TableBottom="</tbody> </table>";
+		
+		sendChat("",Tabletop+Tableheader+TableImg+TableNameTarget+TableDice+TableResult+TablelineDeg+TableBottom);
+		
+			sendChat("","/w gm attaquant diff "+var_diff+" vs "+var_TestResult[0][2]+ " defenseur");
+	   }
+    
+    
+
+/*---------------------------Test de Volonte suite à une attack ------------------------------*/
+   function CharTest(type) {
+
+        
+        let diceResult_w = Math.floor(Math.random() * 20) + 1;
+        
+    if(type=="volonte")
+    {
+        var var_targetChar = getAttrByName(var_target, "will");
+   
+    }
+     if(type="esquive")
+    {
+        var var_targetChar = getAttrByName(var_target, "dodge");
+        
+    }
+    if(type="vigueur")
+    {
+         var var_targetChar = getAttrByName(var_target, "fortitude");
+    }
+      if(type="force")
+    {
+         var var_targetChar = getAttrByName(var_target, "strength");
+    }
+    
+    var defenseChar = diceResult_w + parseInt(var_targetChar);
+        var attackDiff = parseInt(var_diff) ;
+       
+        
+        var Caldegree = defenseChar  - attackDiff;
+        let testResponse = [[]];
+        
+        log("Caldegree|"+Caldegree);
+     
+        if (Caldegree < 0 && Caldegree >= -5 ) {
+            DegEchec = "1";
+            log("DegEchec affliction|1");
+            niv_effect = var_effect1;
+            log("nom affliction|"+niv_effect);
+        }
+        if (Caldegree < -5 && Caldegree >= -10 ) {
+            DegEchec = "2";
+            log("DegEchec affliction|2");
+            niv_effect = var_effect2;
+        }
+        if (Caldegree < -10 && Caldegree >= -15 ) {
+            DegEchec = "3";
+            log("DegEchec affliction|3");
+            niv_effect = var_effect3;
+        }
+        if (Caldegree < -15 ) {
+            DegEchec = "4";
+             log("DegEchec affliction|4");
+            niv_effect = var_effect4;
+        }
+        if(Caldegree < 0){
+            log("first:"+niv_effect);
+            if(var_effect1)
+            {
+        affliction_defenseur=gestion_affliction(niv_effect);
+            }
+            else
+            {
+                affliction_defenseur="l'effet continu"
+            }
+        }
+		
+        if (defenseChar >= attackDiff) {
+            testResponse[0][0] = diceResult_w;
+            testResponse[0][1] = "le test est reussi";
+            testResponse[0][2] = defenseChar;
+			testResponse[0][3] = "0";
+			testResponse[0][4] = var_targetChar;
+			testResponse[0][5] = affliction_defenseur;
+            return testResponse;
+        } else {
+            testResponse[0][0] = diceResult_w;
+            testResponse[0][1] = "le test est un echec";
+            testResponse[0][2] = defenseChar;
+            testResponse[0][3] = DegEchec;
+			testResponse[0][4] = var_targetChar;
+			testResponse[0][5] = affliction_defenseur;
+            return testResponse;
+        }
+    }
+    
+/*---------------------------Appel test char -------------------------------*/
+on("chat:message", function (msg) {
+    if (msg.type == "api" && msg.content.indexOf("!mm3_test") !== -1) {
+        
+    var parts = msg.content.split(" ");
+       parseOption(parts);
+     
+       var selected = msg.selected;
+      
+            if (selected===undefined)
+            {
+                sendChat("API","You must first select a token");
+                return;
+            }
+        var_tokenid=selected[0]._id;
+        let tok = getObj("graphic",selected[0]._id);
+        var_target = tok.get("represents");
+        
+        name_defenser = tok.get("name");
+        
+        //var var_target= getObj("character", charid);
+        
+       
+        //var_targetwill = getAttrByName(var_target, "will");
+        
+        log("info ** : "+var_attackType);
+       
+       TestCharSend(var_attackType);
+    }
+});
+
+    
+/*--------------------------Gestion de la sante ------------------------------*/
+    
+    function gestion_sante() {
+        
+        var etat_defenseur = getAttrByName(var_target,"sante");
+        
+      
+        if (DegEchec=="1" && etat_defenseur!="chancelant" && etat_defenseur!="neutralisé" ) {
+            log("sante|hébeté");
+            sendChat("","!setattr --charid "+var_target+" --sante|hébeté");
+            sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|hébeté");
+            sante_defenseur="hébeté";
+        }
+        
+        if (DegEchec=="2" && etat_defenseur!="neutralisé") {
+            log("sante|chancelant");
+            sendChat("","!setattr --charid "+var_target+" --sante|chancelant");
+            sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|chancelant");
+            sante_defenseur="chancelant";
+        }
+        if (DegEchec=="3") {
+            log("sante|neutralisé");
+            sendChat("","!setattr --charid "+var_target+" --sante|neutralisé");
+            sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|dead");
+            sante_defenseur="neutralisé";
+            removeTokenTurn(var_tokenid);
+            
+        }
+        if (DegEchec=="4") {
+            log("sante|neutralisé");
+            sendChat("","!setattr --charid "+var_target+" --sante|neutralisé");
+            sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|dead");
+            sante_defenseur="neutralisé";
+            removeTokenTurn(var_tokenid);
+        }
+        
+        return sante_defenseur;
+    }
+    
+/*-----------------------------Suppresion d'un token d'un tour -----------------------------*/
+    var removeTokenTurn = function(tid) {
+        log("turnover");
+        Campaign().set({
+            turnorder: JSON.stringify(
+                _.reject(
+                    ( '' === Campaign().get('turnorder') ? [] : JSON.parse(Campaign().get('turnorder')) ),
+                    function(to) {
+                        return to.id === tid;
+                    }
+                )
+            )
+        });
+    };
+
+/*-------------------------Gestion des afflications ------------------------------*/
+
+    function gestion_affliction(var_effet) {
+        var affliction=var_effet;
+        var type_defenseur = getAttrByName(var_target, "type");
+        //var affliction_defenseur = getAttrByName(var_target, "affliction");
+        var sante_defenseur = getAttrByName(var_target, "sante");
+        var etat_defenseur = getAttrByName(var_target, "etat");
+        var affliction_presente="ko";
+        log("affliction:"+affliction);
+        
+         var tokenPossibles = findObjs({
+            _type: "graphic",
+            _id: var_tokenid
+        });
+        
+        if (tokenPossibles.length > 0) {
+            targetObj = tokenPossibles[0];
+        }
+        
+        var bar2_value = targetObj.get("bar2_value")
+        if (bar2_value=="")
+        {
+        var bar_value_vir=bar2_value;
+        }
+        else
+        {
+            var bar_value_vir=","+bar2_value;
+        }
+
+        //bar2_valueTab=bar2_value.split(",");
+
+        
+       affliction_presente=bar2_value.includes(affliction);
+       
+        
+        if(affliction=="hébeté" && !affliction_presente)
+        {
+         
+             if(type_defenseur!="sbire")
+             {
+                 
+                 sendChat("","!setattr --charid "+var_target+" --sante|hébeté");
+             }
+             else
+             {
+            sendChat("","!token-mod --ids "+var_tokenid+" --set bar2_value|hébeté"+bar_value_vir);
+              //TokenSbireaffliction.push([var_target, "hébeté"]);
+             }
+         
+             sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|hébeté");
+             sante_defenseur="hébeté"; 
+        }
+        
+        
+        if(!affliction_presente)
+        {
+            sendChat("","!token-mod --ids "+var_tokenid+" --set bar2_value|"+affliction+bar_value_vir);
+            sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|"+affliction);
+        }
+        
+    
+
+        return affliction;
+    }
+
+/*--------------------------Appel attack de zone ----------------------------------*/
+on("chat:message", function (msg) {
+    if (msg.type == "api" && msg.content.indexOf("!mm3_aoeattack") !== -1) {
+        var parts = msg.content.split(" ");
+       parseOption(parts);
+       gestionAOE();
+    }
+});
+
+
+/*---------------------------Gestion des AOE -----------------------------*/
+function gestionAOE(){
+    
+    log(var_attackType);
+    
+    var distance =parseInt(var_aoe)*2;
+    var distance =10;
+      // log(distance+" / "+ var_aoe_type +" / "+ var_attackerTokenID+" / "+ var_attacker);
+      
+        Tabletop="<table border='1' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody>";
+        Tableheader="<tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'>Attaque à air d'effet</td> </tr> ";
+        TableImg="<tr style='height: 103px;'> <td style='width: 100%; height: 103px;'><img src='https://hdwallsbox.com/wallpapers/m/45/explosions-boom-comics-irredeemable-m44274.jpg' style='object-fit: cover; object-position: 100% 20%;' height='100' width='100%' /></td> </tr> ";
+        TableNameTarget="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>"+var_attackName+"</td> </tr>";
+        TableNameInfo="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>Choisir une cible et afficher AOE</td> </tr>";
+       
+     if(var_aoe_type=="cercle"){
+         
+        TableNameAOE="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>["+ var_aoe_type +" de "+ var_aoe +"m](~AoEControlToken|"+distance+"ft-PF-Circle-Caster)  [enlever AOE](!&#13;#removeAOE)</td> </tr>";
+        TableNameInfo1="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>Toutes les cibles (PJ/PNJ) dans la zone doivent faire l'action'suivante</td> </tr>";
+     }
+     
+     log(var_attackType);
+     
+        if(var_attackType=="volonte")
+        {
+        TableNameTest="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>[test de volonte](!mm3_test --AttackType "+var_attackType+" --Diff "+var_diff+" --effect1 "+var_effect1+" --effect2 "+var_effect2+" --effect3 "+var_effect3+" --effect4 "+var_effect4+")</td> </tr>";
+        }
+        
+        if(var_attackType=="distance")
+        {
+         TableNameTest="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>[Faire une attaque](!mm3_attack --attaquant &#64;&#123;selected|character_id&#125; --cible &#64;&#123;target|character_id&#125; --TargetTokenID &#64;&#123;target|token_id&#125;  --AttackerTokenID &#64;&#123;selected|token_id&#125; --AttackType distance --AttackName "+var_attackName+" --AttackBonusMalus ?{avec un bonus/malus|0,0|1,1|2,2|3,3|4,4|5,5|-1,-1|-2,-2|-3,-3|-4,-4|-5,-5} --AttackDamage "+var_attackDamage+" --AttackCritic "+var_attackCritic+")</td> </tr>";
+        }
+        
+        TableBottom="</tbody> </table>";
+        //sendChat("","["+var_aoe_type+" de "+var_aoe+"m](~AoEControlToken|"+distance+"ft-PF-Circle-Caster)  [enlever](!&#13;#removeAOE)");
+        
+        //sendChat("","[test de volonte](!mm3_test-volonte --Diff "+var_diff+" --effect1 "+var_effect1+" --effect2 "+var_effect2+" --effect3 "+var_effect3+" --effect4 "+var_effect4+")");
+       
+        sendChat("",Tabletop+Tableheader+TableImg+TableNameTarget+TableNameInfo+TableNameAOE+TableNameInfo1+TableNameTest+TableBottom);
+       
+       
+    
+}
+/*-----------------------Parse des variables -------------------------------*/
+function parseOption(parts){
+    
+     for (var i = 1; i < parts.length; i++) {
+            if (parts[i] === "--attaquant") {
+                var_attacker = parts[i + 1];
+            }
+            if (parts[i] === "--cible") {
+                var_target = parts[i + 1];
+            }
+            if (parts[i] === "--AttackName") {
+                var_attackName = parts[i + 1];
+            }
+            if (parts[i] === "--TargetTokenID") {
+                var_tokenid = parts[i + 1];
+            }
+            if (parts[i] === "--AttackerTokenID") {
+                var_attackerTokenID = parts[i + 1];
+            }
+            if (parts[i] === "--AttackType") {
+                var_attackType = parts[i + 1];
+            }
+            if (parts[i] === "--AttackDamage") {
+                var_attackDamage = parts[i + 1];
+            }
+            if (parts[i] === "--AttackCritic") {
+                var_attackcritic = parts[i + 1];
+            }
+             if (parts[i] === "--AttackBonusMalus") {
+                var_attackBonusMalus = parts[i + 1];
+            }
+            if (parts[i] === "--Info") {
+                var_info = parts[i + 1];
+            }
+            if (parts[i] === "--Diff") {
+                var_diff = parts[i + 1];
+            }
+            if (parts[i] === "--effect1") {
+                var_effect1 = parts[i + 1];
+            }
+            if (parts[i] === "--effect2") {
+                var_effect2 = parts[i + 1];
+            }
+            if (parts[i] === "--effect3") {
+                var_effect3 = parts[i + 1];
+            }
+            if (parts[i] === "--effect4") {
+                var_effect4 = parts[i + 1];
+            }
+            if (parts[i] === "--AttackMaster") {
+                var_attackmaster = parts[i + 1];
+            }
+            if (parts[i] === "--AOE") {
+                var_aoe = parts[i + 1];
+            }
+            if (parts[i] === "--AOEtype") {
+                var_aoe_type = parts[i + 1];
+            }
+             if (parts[i] === "--Affliction") {
+                var_name_affliction = parts[i + 1];
+            }
+            
+            if (parts[i] === "--Sante") {
+                var_name_sante = parts[i + 1];
+            }
+            
+             if (parts[i] === "--Etat") {
+                var_name_etat = parts[i + 1];
+            }
+            
+             if (parts[i] === "--AttackDirect") {
+                var_attackdirect = parts[i + 1];
+            }
+            if (parts[i] === "--AttackChar") {
+                var_attackchar = parts[i + 1];
+            }
+            
+        }
+    
+    
+}
+
+
+
+
+/*---------------------------recupere l'afflication dans la liste ----------------------------------*/
+
+function getAffliction(tokenId) {
+  for (let i = 0; i < TokenSbireaffliction.length; i++) {
+    if (TokenSbireaffliction[i][0] == tokenId) {
+      return TokenSbireaffliction[i][1];
+    }
+  }
+  return "Non trouvé";  // Retourne une valeur par défaut si le Token ID n'a pas été trouvé
+}
+
+/*------------------------Appel de l'etat ---------------------------------*/
+on("chat:message", function (msg) {
+    if (msg.type == "api" && msg.content.indexOf("!mm3_etat") !== -1) {
+       
+        var parts = msg.content.split(" ");
+       parseOption(parts);
+       
+        var selected = msg.selected;
+      
+        if (selected===undefined)
+            {
+                sendChat("API","You must first select a token");
+                return;
+            }
+        var_tokenid=selected[0]._id;
+        let tok = getObj("graphic",selected[0]._id);
+        var_target = tok.get("represents");
+        
+         name_defenser = tok.get("name");
+        
+        var var_targetype = getAttrByName(var_target, "type");
+        var sante_target = getAttrByName(var_target, "sante");
+        //var etat_target = getAttrByName(var_target, "etat");
+        var TableAffliction="";
+
+        var bar2_value = tok.get("bar2_value")
+        
+
+        bar2_valueTab=bar2_value.split(",");
+        
+        //sendChat("","<p>sante ="+sante_target+"</p> <p> etat ="+etat_target+"</p>");
+        
+        Tabletop="<table border='0' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody>";
+        Tableheader="<tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'>Etat</td> </tr> ";
+        TableImg="<tr style='height: 103px;'> <td style='width: 100%; height: 103px;'><img src='https://cdn.pixabay.com/photo/2013/07/18/10/59/human-skeleton-163715_1280.jpg' style='object-fit: cover; object-position: 100% 20%;' height='100' width='100%' /></td> </tr> ";
+        TableNameTarget="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'>"+name_defenser+"</td> </tr>";
+        
+        if(var_targetype!="sbire"){
+             TableLine1="<tr style='height: 18px;'> <td style='width: 100%; height: 18px;'> <p>sante ="+sante_target+"</p></td> </tr> ";
+        }
+        else
+        {
+            TableLine1="";
+        }
+       
+        TableBottom="</tbody> </table>";
+
+        
+         for (var i = 0; i < bar2_valueTab.length; i++) {
+             
+             affliction_value = bar2_valueTab[i];
+             if(!affliction_value)
+             {
+                 affliction_value="normal";
+             }
+             TableAffliction="<tr style='height: 18px;'> <td> <p style='font-size: 13px'>"+afflictionDescription(affliction_value)+"</p></td></tr>"+TableAffliction;
+             // sendChat("","<p>"+afflictionDescription(affliction_value)+"</p>");
+             
+         }
+        
+        sendChat("",Tabletop+Tableheader+TableImg+TableNameTarget+TableLine1+TableAffliction+TableBottom);
+        
+    }
+});
+
+/*-------------------------Gestion des descriptiosn des afflications ----------------------------------*/
+
+function afflictionDescription(nameAffliction)
+{
+    
+    moins2test="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'> -2 aux test & attaque </div>";
+    moins5test="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'> -5 aux test & attaque </div> ";
+    vitessediv2="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'>  1/2 vitesse</div>";
+    Action1="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'> 1 action de mouvement ou attaque</div>";
+    defensediv2="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'> defense/2 </div>";
+    zeroaction="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'> Aucune action</div>";
+    sansdefense="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'> sans defense</div>";
+    zeromouvement="<div style='width:50%;margin:auto;background-color:red;margin: 2px auto;padding:3px;border:1px solid #fff;font-weight:bold;'>Aucun deplacement</div>";
+    
+    
+     if(nameAffliction=="normal"){
+        AfflictionText="👌 <b>normal </b>: état. Le personnage est indemne et non affecté par d’autres états, il peut agir normalement.";
+    }
+    
+    if(nameAffliction=="hébeté"){
+        AfflictionText="---⚠️  <b>Hébété</b> --- [x](!mm3_change_etat --Affliction hébeté) <div style='font-size:9px'> Un personnage hébété ne peut effectuer que des actions libres et une seule action simple par tour mais, comme d’habitude, il peut utiliser cette action pour effectuer un mouvement. Étourdi prévaut sur hébété.</div>"+Action1;
+    }
+    if(nameAffliction=="aveugle"){
+        AfflictionText="---⚠️ <b>Aveugle</b> --- [x](!mm3_change_etat --Affliction aveugle)<div style='font-size:9px'> Le personnage ne peut plus rien voir, toute personne ou chose obtient alors un camouflage visuel. Il est ralenti, visuellement insensible, vulnérable et peut même être diminué ou handicapé pour des activités faisant appel à la vue </div>"+moins5test+vitessediv2+defensediv2;
+    }
+    if(nameAffliction=="fatigué"){
+        AfflictionText="---⚠️  <b>fatigué</b> --- [x](!mm3_change_etat --Affliction fatigué) <div style='font-size:9px'> Les personnages fatigués sont ralentis. Les personnages se remettent de cet état de fatigue après une heure de repos</div>"+defensediv2;;
+    }
+    if(nameAffliction=="épuisé"){
+        AfflictionText="---⚠️  <b>épuisé </b> --- [x](!mm3_change_etat --Affliction épuisé) <div style='font-size:9px'> Les personnages épuisés sont au bord de l’évanouissement. Ils sont diminués et ralentis Les personnages peuvent se remettre de cet état d’épuisement après une heure de repos dans un environnement confortable</div>"+vitessediv2+moins2test;
+    }
+    if(nameAffliction=="diminué"){
+        AfflictionText="---⚠️  <b>diminué</b> --- [x](!mm3_change_etat --Affliction diminué) <div style='font-size:9px'> Un personnage diminué est victime d’un malus de circonstances de −2 à ses tests. Si la diminution s’applique à des tests spécifiques, ces derniers sont ajoutés au nom de l’état, par exemple : Attaque diminuée, Combativité diminuée, Perception diminuée, etc. Si handicapé s’applique au(x) même(s) trait(s), il prévaut sur diminué</div>"+moins2test;;
+    }
+    if(nameAffliction=="controlé"){
+        AfflictionText="---⚠️  <b>contrôlé :</b> --- [x](!mm3_change_etat --Affliction controlé) <div style='font-size:9px'> un personnage contrôlé n’a plus aucun libre arbitre ; à chaque tour, toutes ses actions sont dictées par un autre personnage qui le contrôle.</div>";
+    }
+    if(nameAffliction=="surpris"){
+        AfflictionText="---⚠️ <b>surpris : </b> --- [x](!mm3_change_etat --Affliction surpris) <div style='font-size:9px'> Un personnage surpris est étourdi et vulnérable, étant donné qu’il est pris de court il ne peut agir et est moins capable d’éviter les attaques.</div>"+defensediv2+zeroaction;
+    }
+     if(nameAffliction=="terre"){
+        AfflictionText="---⚠️ <b> à terre </b> --- [x](!mm3_change_etat --Affliction terre) <div style='font-size:9px'> un personnage à terre est étendu sur le sol et victime d’un malus de circonstances de −5 aux tests d’attaque au contact. Les adversaires reçoivent un bonus de circonstances de +5 aux tests d’attaque au contact mais un malus . Les personnages à terre sont ralentis. Se relever demande une action de mouvement.</div>"+moins5test+vitessediv2;
+    }
+    if(nameAffliction=="endormi"){
+        AfflictionText="---⚠️ <b>endormi</b> --- [x](!mm3_change_etat --Affliction endormi) <div style='font-size:9px'> Lorsqu’il est endormi, un personnage est sans défense, étourdi et insensible. Un résultat de trois degrés de réussite ou plus à un test de Perception concernant l’audition permet au personnage de se réveiller et dissipe tous ces états, tout comme peut le faire un mouvement brusque (comme le fait de secouer le personnage endormi, par exemple) ou tout effet offrant un test de résistance</div>"+sansdefense+zeroaction;
+    }
+       if(nameAffliction=="entravé"){
+        AfflictionText="---⚠️ <b>entravé</b> --- [x](!mm3_change_etat --Affliction entravé) <div style='font-size:9px'> Un personnage entravé est ralenti et vulnérable S’il est retenu par des liens attachés à un objet immobile, le personnage est immobile plutôt que ralenti. S’il est entravé par un autre personnage, il est immobile mais peut être déplacé par celui qui le retient.</div>"+moins5test+vitessediv2;
+    }
+       if(nameAffliction=="envouté"){
+        AfflictionText="---⚠️ <b>envouté</b> --- [x](!mm3_change_etat --Affliction envouté) <div style='font-size:9px'>  Un personnage envoûté est étourdi et ne peut rien faire d’autre que se concentrer sur l’effet envoûtant. Toute menace évidente met immédiatement fin à la transe. Tout allié peut également faire sortir un personnage de cette condition avec un test de compétence d’interaction (DD 10 + rang d’effet).</div>"+zeroaction;
+    }
+        if(nameAffliction=="étourdi"){
+        AfflictionText="---⚠️ <b>étroudi</b> --- [x](!mm3_change_etat --Affliction étourdi) <div style='font-size:9px'>Les personnages étourdis ne peuvent effectuer aucune action, y compris les actions libres</div>"+zeroaction;
+    }
+       if(nameAffliction=="handicapé"){
+        AfflictionText="---⚠️ <b>handicapé</b> --- [x](!mm3_change_etat --Affliction handicapé) <div style='font-size:9px'>Un personnage handicapé est victime d’un malus de circonstances de −5 à ses tests. Si le malus s’applique à des tests spécifiques, ces derniers sont ajoutés au nom de l’état, par exemple : Attaque handicapée, Combativité handicapée, Perception handicapée, etc. Si invalide s’applique également au(x) même(s) trait(s), il prévaut sur handicapé</div>"+moins5test;
+    }
+       if(nameAffliction=="immobile"){
+        AfflictionText="---⚠️ <b>immobile</b> --- [x](!mm3_change_etat --Affliction immobile) <div style='font-size:9px'>Les personnages immobilisés n’ont aucune vitesse de mouvement et ne peuvent quitter l’endroit où ils sont mais ils peuvent toujours effectuer des actions, sauf si cela est proscrit par un autre état</div>"+zeromouvement;
+    }
+       if(nameAffliction=="influencé"){
+        AfflictionText="---⚠️ <b>influencé</b> --- [x](!mm3_change_etat --Affliction influencé) <div style='font-size:9px'> un personnage influencé est gouverné par une force extérieure contre laquelle il doit lutter ; le personnage ne peut qu’effectuer des actions libres et une seule action simple par tour, ces deux types d’actions étant choisis par la personne qui le contrôle. Comme d’habitude, cette action simple peut être changée en action de mouvement. Contrôlé prévaut sur influencé.</div>";
+    }
+      if(nameAffliction=="invalide"){
+        AfflictionText="---⚠️ <b>invalide</b>  --- [x](!mm3_change_etat --Affliction invalide) <div style='font-size:9px'> Une ou plusieurs des caractéristiques du personnage deviennent inférieures à −5 (voir Caractéristiques invalidées dans le chapitre Caractéristiques).</div>"+moins5test;
+    }
+     if(nameAffliction=="paralysé"){
+        AfflictionText="---⚠️ <b>paralysé</b> --- [x](!mm3_change_etat --Affliction paralysé) <div style='font-size:9px'> Un personnage paralysé est sans défense, immobile et physiquement étourdi, figé sur place et incapable de bouger mais néanmoins conscient de ce qui se passe autour de lui et capable d’effectuer des actions purement mentales n’impliquant aucun mouvement physique, quel qu’il soit."+sansdefense+zeroaction;
+    }
+    return AfflictionText;
+}
+
+/*--------------------------Appel changement d'etat --------------------------------*/
+on("chat:message", function (msg) {
+    if (msg.type == "api" && msg.content.indexOf("!mm3_change_etat") !== -1) {
+       
+        var parts = msg.content.split(" ");
+       parseOption(parts);
+       
+        var selected = msg.selected;
+      
+        if (selected===undefined)
+            {
+                sendChat("API","You must first select a token");
+                return;
+            }
+        var_tokenid=selected[0]._id;
+        let tok = getObj("graphic",selected[0]._id);
+        var_target = tok.get("represents");
+        
+        name_defenser = tok.get("name");
+
+        var bar2_value = tok.get("bar2_value")
+        //var sante_target = getAttrByName(var_target, "sante");
+        //var etat_target = getAttrByName(var_target, "etat");
+        
+        log(var_name_affliction);
+        if(var_name_affliction)
+        {
+        
+            var index = bar2_value.indexOf(var_name_affliction);
+            
+            if (index !=-1)
+            {
+                var new_bar2_value = deleteAflliction(var_name_affliction,bar2_value);
+                
+                sendChat("","⚠️ <b>"+var_name_affliction+"</b> a été envlevé du personnage : "+name_defenser+" [voir etat](!mm3_etat) | [voir action](!mm3_actions)");
+                sendChat("","!token-mod --ids "+var_tokenid+" --set bar2_value|"+new_bar2_value +" statusmarkers|-"+var_name_affliction);
+            }
+            else
+            {
+                if(var_name_affliction=="normal")
+                {
+                   
+                sendChat("","!token-mod --ids "+var_tokenid+" --set bar2_value| statusmarkers|statusmarkers|=blue|-blue");
+                }
+                else{
+                sendChat("","!token-mod --ids "+var_tokenid+" --set bar2_value|"+var_name_affliction+","+bar2_value+" statusmarkers|"+var_name_affliction);
+                }
+            }
+
+        }
+        
+        if(var_name_sante)
+        {
+           
+             if(var_name_sante=="normal")
+            {
+                sendChat("","!setattr --charid "+var_target+" --sante|normal");
+                sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|-hébeté|-chancelant|-dead");
+            }
+            
+            if(var_name_sante=="hébeté")
+            {
+                sendChat("","!setattr --charid "+var_target+" --sante|hébeté");
+                sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|hébeté");
+            }
+             if(var_name_sante=="chancelant")
+            {
+                 sendChat("","!setattr --charid "+var_target+" --sante|chancelant");
+                 sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|chancelant");
+            }
+               if(var_name_sante=="neutralisé")
+            {
+                  sendChat("","!setattr --charid "+var_target+" --sante|neutralisé");
+                  sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|dead");
+            }
+            
+                if(var_name_sante=="mort")
+            {
+                  sendChat("","!setattr --charid "+var_target+" --sante|mort");
+                  sendChat("","!token-mod --ids "+var_tokenid+" --set statusmarkers|dead");
+            }
+            
+            
+        }
+        
+        
+    }
+});
+
+/*-------------------------suppression d'une afflication ---------------------------------*/
+
+function deleteAflliction(mot,affliction) {
+
+  var afflcitionArray = affliction.split(","); // Convertit la chaîne de caractères en un tableau en utilisant la virgule comme séparateur
+  var index = afflcitionArray.indexOf(mot); // Trouve l'index du mot dans le tableau
+  if (index > -1) { // Vérifie si le mot est présent dans la chaîne de caractères
+    afflcitionArray.splice(index, 1); // Supprime le mot du tableau
+  }
+  return afflcitionArray.join(","); // Convertit le tableau modifié en une chaîne de caractères en utilisant la virgule comme séparateur
+}
+ 
+ /*------------------------list abilities ---------------------------------*/
+ 
+ function displayAbilities() {
+
+  var abilities = findObjs({_type: "ability", _characterid: characterID}); // Récupérer toutes les abilities du personnage
+
+Tabletop="<table border='0' style='border-collapse: collapse; width: 100%; background-color: #000000; color: #ffffff; text-align: center; height: 251px;'> <tbody>";
+Tableheader="<tr style='height: 26px;'> <td style='width: 100%; background-image: url(\"https://t4.ftcdn.net/jpg/03/29/14/55/360_F_329145569_Vyu8Vex4JYnKbbjV43aFl1OXLSaijPi4.jpg\"); font-weight: bold; padding: 5px; color: white; font-size: 20px; text-shadow: #000000 2px 0px, #000000 -2px 0px, #000000 0px 2px, #000000 0px -2px, #000000 1px 1px, #000000 -1px -1px, #000000 1px -1px, #000000 -1px 1px; height: 26px;'>Actions</td> </tr> ";
+TableImg="<tr style='height: 55px;'> <td style='width: 100%;'><img src='"+img_defenser+"' style='object-fit: cover; object-position: 100% 20%;' height='50px' width='50px' /><b>   "+name_defenser+"</b></td> </tr> ";
+TableNameTarget="";
+var Tableability="";
+var Tableabilityattaque="";
+var Tableabilityattaquetilte=""
+ var TableAffliction="";
+
+var sante_target = getAttrByName(characterID, "sante");
+ var var_targetype = getAttrByName(characterID, "type");
+ if(var_targetype!="sbire"){
+             TableLine1="<tr style='height: 18px;'> <td style='width: 100%; height: 18px;'> <p>sante ="+sante_target+"</p></td> </tr> ";
+        }
+        else
+        {
+            TableLine1="";
+        }
+
+  _.each(abilities, function(ability) { // Pour chaque ability, ajouter une ligne à la table avec un bouton pour lancer l'ability
+    nameAbility = ability.get("name");
+    
+
+    
+    if ( nameAbility.includes("attaque_")) {
+    Tableabilityattaquetilte="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'><b>-----💥 Attaques -----</b></td> </tr>";
+    let nameAbility_new = nameAbility.replace("attaque_", "");
+    Tableabilityattaque +="<tr style='height: 30px;'> <td style='width: 100%; height: 40px;'>["+nameAbility_new+"](~selected|"+ability.get("name")+") </td></tr>";
+    }
+    else
+    {
+    Tableability += "<tr style='height: 30px;'> <td style='width: 100%; height: 40px;'>["+ability.get("name")+"](~selected|"+ability.get("name")+") </td></tr>";
+    }
+  });
+  
+      bar2_valueTab=bar2_value.split(",");
+    
+     for (var i = 0; i < bar2_valueTab.length; i++) {
+             
+             affliction_value = bar2_valueTab[i];
+             if(!affliction_value)
+             {
+                 affliction_value="normal";
+             }
+             TableAffliction="<tr style='height: 18px;'> <td> <p style='font-size: 13px'>"+afflictionDescription(affliction_value)+"</p></td></tr>"+TableAffliction;
+             // sendChat("","<p>"+afflictionDescription(affliction_value)+"</p>");
+             
+         }
+  
+  
+  TableBasicability="<tr style='height: 50px;'> <td style='width: 100%; height: 50px;'><b>-----⚡Actions -----</b></td> </tr><tr style='height: 30px;'> <td style='width: 100%; height: 40px;'>[💢 désarmer](!#desarmer)</td></tr>"
+
+    TableBottom="</tbody> </table>";
+
+  // Afficher la table dans le chat
+   sendChat("",Tabletop+Tableheader+TableImg+TableNameTarget+TableLine1+TableAffliction+Tableabilityattaquetilte+Tableabilityattaque+Tableability+TableBasicability+TableBottom);
+}
+
+
+// Commande pour lancer la fonction displayCharacterAbilities
+on("chat:message", function(msg) {
+  if (msg.type == "api" && msg.content.indexOf("!mm3_actions") !== -1) {
+        var selected = msg.selected;
+      
+        if (selected===undefined)
+            {
+                sendChat("API","You must first select a token");
+                return;
+            }
+        var_tokenid=selected[0]._id;
+        let tok = getObj("graphic",selected[0]._id);
+       // var_target = tok.get("represents");
+       log(tok);
+       name_defenser = tok.get("name");
+       img_defenser = tok.get("imgsrc");
+       bar2_value = tok.get("bar2_value")
+        
+        var character = getObj("character", tok.get("represents"));
+        
+       characterID =character.id;
+    
+  ///var character = getObj("character", Campaign().get("playerpageid"));
+
+  if (character) {
+    displayAbilities(characterID);
+   
+  }
+  }
+});
+
